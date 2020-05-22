@@ -1,9 +1,12 @@
 import React from "react";
+import Button from "@material-ui/core/Button";
 
 const logout = ({ handleLogout }) => {
   return (
     <div>
-      <button onClick={handleLogout}>Logout</button>
+      <Button variant="outlined" color="secondary" onClick={handleLogout}>
+        Logout
+      </Button>
     </div>
   );
 };

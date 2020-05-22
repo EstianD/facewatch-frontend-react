@@ -9,14 +9,16 @@ import AuthContext from "../hooks/AuthContext";
 
 // Components
 import Header from "./Header";
+import Profiles from "./Profiles";
 
 const dashboard = ({ user, handleLogout }) => {
   return (
     <AuthContext.Provider value={user}>
       <CssBaseline />
-      <Container maxWidth="sm">
+      <Container maxWidth="md">
         <div>
           <Header handleLogout={handleLogout} />
+          <Profiles />
         </div>
       </Container>
     </AuthContext.Provider>
