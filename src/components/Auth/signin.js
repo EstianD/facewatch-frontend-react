@@ -15,8 +15,8 @@ import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 
 // Import Signin service
-import signin from "../services/signin";
-import isAuthenticated from "../services/checkAuth";
+import signin from "../../services/signin";
+import isAuthenticated from "../../services/checkAuth";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -38,7 +38,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn({ handleToggleSign, signupStatus, setUser }) {
+export default function SignIn({
+  handleToggleSign,
+  signupStatus,
+  setsignupStatus,
+  setUser,
+}) {
   const classes = useStyles();
 
   const [signinValues, setSigninValues] = useState({
@@ -67,6 +72,7 @@ export default function SignIn({ handleToggleSign, signupStatus, setUser }) {
       localStorage.setItem("jwt-auth", signingIn.jwt);
       setUser(isAuthenticated());
       setSigninError(null);
+      setsignupStatus({ status: null });
     } else {
       setSigninError(signingIn.error);
       setUser(null);

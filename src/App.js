@@ -4,8 +4,8 @@ import "./App.css";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 
 // Compoonents
-import Signin from "./components/signin";
-import Signup from "./components/signup";
+import Signin from "./components/Auth/signin";
+import Signup from "./components/Auth/signup";
 import Dashboard from "./components/dashboard";
 
 // Authentication
@@ -19,6 +19,10 @@ const App = () => {
   const handleLogout = (e) => {
     localStorage.removeItem("jwt-auth");
     setUser(isAuthenticated());
+    setsignupStatus({
+      page: "signin",
+      status: null,
+    });
   };
 
   // Toggle signin/signup
@@ -40,6 +44,7 @@ const App = () => {
           handleToggleSign={handleToggleSign}
           signupStatus={signupStatus}
           setUser={setUser}
+          setsignupStatus={setsignupStatus}
         />
       );
     } else {

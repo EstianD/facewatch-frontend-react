@@ -1,5 +1,5 @@
 import React, { useContext, useState } from "react";
-import AuthContext from "../hooks/AuthContext";
+import AuthContext from "../../hooks/AuthContext";
 
 // Import Components
 import Logout from "./logout";
@@ -38,13 +38,13 @@ const Header = ({ handleLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
   const open = Boolean(anchorEl);
 
-  const handleMenu = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleMenu = (event) => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = () => {
-    setAnchorEl(null);
-  };
+  // const handleClose = () => {
+  //   setAnchorEl(null);
+  // };
 
   return (
     <div className={classes.root}>

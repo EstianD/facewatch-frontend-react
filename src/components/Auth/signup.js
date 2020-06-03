@@ -14,9 +14,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
 
-import useSignupForm from "../hooks/useSignupForm";
-import validateSignup from "../services/validateSignup";
-import signup from "../services/signup";
+import useSignupForm from "../../hooks/useSignupForm";
+import validateSignup from "../../services/validateSignup";
+import signup from "../../services/signup";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -50,6 +50,7 @@ export default function SignUp({
   const submit = async () => {
     // Submitting
     let registering = await signup(signupValues);
+    console.log(registering);
     if (registering.status) {
       // if (signup(signupValues)) {
       setsignupStatus({ status: "User added successfully!", page: "signin" });
