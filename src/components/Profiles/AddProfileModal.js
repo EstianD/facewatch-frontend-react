@@ -40,19 +40,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddProfileModal = () => {
+const AddProfileModal = ({ setProfiles, profiles, getProfileData }) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(false);
-  const [profileuser, setprofileuser] = useState(null);
+  const [profileuser, setprofileuser] = useState("");
   const [message, setMessage] = useState("");
-  const [uploadPerc, setUploadPerc] = useState(0);
+  // const [uploadPerc, setUploadPerc] = useState(0);
+  const [uploading, setUploading] = useState(false);
 
   const getImage = (e) => {
     const files = e.target.files;
-    console.log(files[0]);
+    // console.log(files[0]);
     if (files && files.length > 0) {
       const file = files[0];
       setFile(file);
@@ -67,39 +68,61 @@ const AddProfileModal = () => {
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
 
-    const URL = process.env.REACT_APP_NODE_URL;
+    // profiles.map((profile) => console.log(profile));
+
+    // const URL = process.env.REACT_APP_NODE_URL;
     const jwt = localStorage.getItem("jwt-auth");
     // console.log(profileuser);
     // Create FormData
     const formData = new FormData();
-    formData.append("file", file);
-    formData.set("name", profileuser);
+    formData.append("image", file);
+    // formData.set("name", profileuser);
+    formData.append("name", profileuser);
+    console.log(file);
+    console.log(profileuser);
 
     if (file && profileuser) {
       try {
-        const res = await axios.post(`/api/file-upload/profile`, formData, {
-          headers: {
-            "Content-Type": `multipart/form-data`,
-            "auth-token": jwt,
-          },
-          onUploadProgress: (progressEvent) => {
-            setUploadPerc(
-              parseInt(
-                Math.round((progressEvent.loaded * 100) / progressEvent.total)
-              )
-            );
-            // clear percentage
-            setTimeout(() => setUploadPerc(0), 10000);
-          },
-        });
+        setUploading(true);
+        await axios
+          .post(`/api/file-upload/profile`, formData, {
+            headers: {
+              "Content-Type": `multipart/form-data`,
+              "auth-token": jwt,
+            },
+          })
+          .then((res) => {
+            if (res.data.status === 200) {
+              console.log(res);
+              setMessage("File uploaded succesfully!");
+              setFile(null);
+              setprofileuser("");
+              // re-render all profiles
+              getProfileData();
+              // setUploadPerc(100);
+              setTimeout(() => {
+                // setUploadPerc(0);
+                setUploading(false);
+              }, 1000);
+            } else if (res.data.status === 401) {
+              console.log(res);
+              // setFile(null);
+              setprofileuser("");
+              setMessage(res.data.msg);
+              setUploading(false);
+            } else {
+              console.log(res);
+              setMessage(
+                "There was a error on our side, Please try again later."
+              );
+              setFile(null);
+              setprofileuser("");
+            }
+          });
 
-        console.log(res);
+        // console.log(res);
 
-        setMessage("File uploaded succesfully!");
-        setFile(null);
-        setprofileuser("");
-
-        const { fileName, filePath } = res.data;
+        // const { fileName, filePath } = res.data;
       } catch (err) {
         if (err.response.status === 500) {
           setMessage("There was a problem with the server");
@@ -138,6 +161,7 @@ const AddProfileModal = () => {
           name="profile-name"
           onChange={handleProfileNameChange}
           autoFocus
+          value={profileuser}
         />
 
         <input
@@ -166,10 +190,11 @@ const AddProfileModal = () => {
           Add
         </Button>
       </form>
-      <AddProfileProgressBar
-        uploadPerc={uploadPerc}
-        setUploadPerc={setUploadPerc}
-      />
+      {uploading && (
+        <>
+          <AddProfileProgressBar />
+        </>
+      )}
     </div>
   );
 

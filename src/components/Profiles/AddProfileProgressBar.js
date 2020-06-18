@@ -12,18 +12,13 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddProfileProgressBar = ({ uploadPerc, setUploadPerc }) => {
+const AddProfileProgressBar = () => {
   const classes = useStyles();
-
   return (
     <div className={classes.root}>
-      <LinearProgress variant="determinate" value={uploadPerc} />
+      <LinearProgress />
     </div>
   );
-};
-
-AddProfileProgressBar.propTypes = {
-  uploadPerc: PropTypes.number.isRequired,
 };
 
 export default AddProfileProgressBar;

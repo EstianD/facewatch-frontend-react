@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddGallery = () => {
+const AddGallery = ({ getGalleryData }) => {
   const classes = useStyles();
 
   // State hooks
@@ -55,25 +55,13 @@ const AddGallery = () => {
               "Content-Type": `multipart/form-data`,
               "auth-token": jwt,
             },
-            onUploadProgress: (progressEvent) => {
-              setUploadPerc(
-                95
-                // parseInt(
-                //   Math.round((progressEvent.loaded * 100) / progressEvent.total)
-                // )
-              );
-              // clear percentage
-              // setTimeout(() => {
-              //   setUploadPerc(0);
-              //   setUploading(false);
-              // }, 1000);
-            },
           })
           .then((res) => {
             if (res.data.status === 200) {
-              setUploadPerc(100);
+              // setUploadPerc(100);
+              getGalleryData();
               setTimeout(() => {
-                setUploadPerc(0);
+                // setUploadPerc(0);
                 setUploading(false);
               }, 1000);
             }

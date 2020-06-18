@@ -1,28 +1,24 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { makeStyles } from "@material-ui/core/styles";
-import CircularProgress from "@material-ui/core/CircularProgress";
+import LinearProgress from "@material-ui/core/LinearProgress";
 
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: "flex",
+    width: "100%",
     "& > * + *": {
-      marginLeft: theme.spacing(2),
+      marginTop: theme.spacing(2),
     },
   },
 }));
 
-const AddGalleryProgressBar = ({ uploadPerc, setUploadPerc }) => {
+const AddGalleryProgressBar = () => {
   const classes = useStyles();
   return (
     <div className={classes.root}>
-      <CircularProgress variant="static" value={uploadPerc} />
+      <LinearProgress />
     </div>
   );
-};
-
-AddGalleryProgressBar.propTypes = {
-  uploadPerc: PropTypes.number.isRequired,
 };
 
 export default AddGalleryProgressBar;

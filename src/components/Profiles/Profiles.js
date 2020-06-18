@@ -1,10 +1,23 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import AddProfileModal from "./AddProfileModal";
+import axios from "axios";
 
-const Profiles = () => {
+import ProfileList from "./ProfileList";
+
+const Profiles = ({
+  profiles,
+  setProfiles,
+  onProfileDelete,
+  getProfileData,
+}) => {
   return (
     <div>
-      <AddProfileModal />
+      <AddProfileModal
+        setProfiles={setProfiles}
+        profiles={profiles}
+        getProfileData={getProfileData}
+      />
+      <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
     </div>
   );
 };

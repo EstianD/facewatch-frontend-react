@@ -6,7 +6,7 @@ import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 // Compoonents
 import Signin from "./components/Auth/signin";
 import Signup from "./components/Auth/signup";
-import Dashboard from "./components/dashboard";
+import Dashboard from "./components/Dashboard";
 
 // Authentication
 import isAuthenticated from "./services/checkAuth";
@@ -58,13 +58,16 @@ const App = () => {
     }
   };
 
-  // Generate Dashboard
-  const dashboardPage = () => (
-    <Dashboard user={user} handleLogout={handleLogout} />
-  );
-
   // Render
-  return <div>{user === null ? signForm() : <div>{dashboardPage()}</div>}</div>;
+  return (
+    <div>
+      {user === null ? (
+        signForm()
+      ) : (
+        <Dashboard user={user} handleLogout={handleLogout} />
+      )}
+    </div>
+  );
 };
 
 export default App;
