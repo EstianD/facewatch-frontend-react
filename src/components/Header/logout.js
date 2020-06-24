@@ -4,9 +4,7 @@ import Button from "@material-ui/core/Button";
 const logout = ({ handleLogout }) => {
   return (
     <div>
-      <Button variant="outlined" color="secondary" onClick={handleLogout}>
-        Logout
-      </Button>
+      <Button onClick={handleLogout}>Logout</Button>
     </div>
   );
 };

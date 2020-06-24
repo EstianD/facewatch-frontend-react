@@ -8,7 +8,6 @@ import CardContent from "@material-ui/core/CardContent";
 import CardMedia from "@material-ui/core/CardMedia";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
-import EditIcon from "@material-ui/icons/Edit";
 import DeleteIcon from "@material-ui/icons/Delete";
 
 import { confirmAlert } from "react-confirm-alert"; // Import
@@ -25,10 +24,8 @@ const useStyles = makeStyles({
 
 const Profile = ({ profile, onProfileDelete }) => {
   const classes = useStyles();
-  console.log(profile);
 
   const confirmDelete = (e) => {
-    console.log(e);
     confirmAlert({
       title: "Confirm to submit",
       message: "Are you sure you want to delete this profile?",

@@ -1,17 +1,10 @@
 import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
-import GridList from "@material-ui/core/GridList";
-import GridListTile from "@material-ui/core/GridListTile";
-import GridListTileBar from "@material-ui/core/GridListTileBar";
-import ListSubheader from "@material-ui/core/ListSubheader";
-import IconButton from "@material-ui/core/IconButton";
-import InfoIcon from "@material-ui/icons/Info";
+
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import { v4 as uuidv4 } from "uuid";
-// import tileData from "./tileData";
-import GalleryImage from "./GalleryImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -26,7 +19,6 @@ const useStyles = makeStyles((theme) => ({
 
 const Gallery = ({ galleryData, text }) => {
   const classes = useStyles();
-  console.log(galleryData);
 
   const loadGallery = () => {
     return (

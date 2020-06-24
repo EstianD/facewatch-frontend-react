@@ -1,10 +1,8 @@
 import React, { useState } from "react";
 
 import AddIcon from "@material-ui/icons/Add";
-import Fab from "@material-ui/core/Fab";
 import Button from "@material-ui/core/Button";
-import IconButton from "@material-ui/core/IconButton";
-import PhotoCamera from "@material-ui/icons/PhotoCamera";
+
 import axios from "axios";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -30,7 +28,6 @@ const AddGallery = ({ getGalleryData }) => {
   const classes = useStyles();
 
   // State hooks
-  const [images, setImages] = useState([]);
   const [uploadPerc, setUploadPerc] = useState(0);
   const [uploading, setUploading] = useState(false);
 
@@ -43,8 +40,6 @@ const AddGallery = ({ getGalleryData }) => {
     for (let i = 0; i < files.length; i++) {
       formData.append(`image`, files[i]);
     }
-
-    console.log(formData.getAll("image"));
 
     if (formData) {
       try {
@@ -65,7 +60,6 @@ const AddGallery = ({ getGalleryData }) => {
                 setUploading(false);
               }, 1000);
             }
-            console.log(res);
           });
       } catch (err) {}
     }

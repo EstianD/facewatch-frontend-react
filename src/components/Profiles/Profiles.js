@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import AddProfileModal from "./AddProfileModal";
-import axios from "axios";
 
 import ProfileList from "./ProfileList";
 
@@ -9,6 +8,7 @@ const Profiles = ({
   setProfiles,
   onProfileDelete,
   getProfileData,
+  profileLoading,
 }) => {
   return (
     <div>
@@ -16,6 +16,7 @@ const Profiles = ({
         setProfiles={setProfiles}
         profiles={profiles}
         getProfileData={getProfileData}
+        profileLoading={profileLoading}
       />
       <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
     </div>

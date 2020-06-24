@@ -5,7 +5,6 @@ import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 
-import { FormControl } from "@material-ui/core";
 import ProfileMsg from "./ProfileMsg";
 import AddProfileProgressBar from "./AddProfileProgressBar";
 
@@ -40,7 +39,12 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const AddProfileModal = ({ setProfiles, profiles, getProfileData }) => {
+const AddProfileModal = ({
+  setProfiles,
+  profiles,
+  getProfileData,
+  profileLoading,
+}) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
   const [modalStyle] = useState(getModalStyle);
@@ -62,25 +66,20 @@ const AddProfileModal = ({ setProfiles, profiles, getProfileData }) => {
 
   const handleProfileNameChange = (e) => {
     setprofileuser(e.target.value);
-    console.log(profileuser);
+    // console.log(profileuser);
   };
 
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
-
-    // profiles.map((profile) => console.log(profile));
-
     // const URL = process.env.REACT_APP_NODE_URL;
     const jwt = localStorage.getItem("jwt-auth");
     // console.log(profileuser);
     // Create FormData
     const formData = new FormData();
     formData.append("image", file);
-    // formData.set("name", profileuser);
     formData.append("name", profileuser);
-    console.log(file);
-    console.log(profileuser);
 
+    // Check if file is selected with profile
     if (file && profileuser) {
       try {
         setUploading(true);
@@ -93,7 +92,6 @@ const AddProfileModal = ({ setProfiles, profiles, getProfileData }) => {
           })
           .then((res) => {
             if (res.data.status === 200) {
-              console.log(res);
               setMessage("File uploaded succesfully!");
               setFile(null);
               setprofileuser("");
@@ -105,13 +103,10 @@ const AddProfileModal = ({ setProfiles, profiles, getProfileData }) => {
                 setUploading(false);
               }, 1000);
             } else if (res.data.status === 401) {
-              console.log(res);
-              // setFile(null);
               setprofileuser("");
               setMessage(res.data.msg);
               setUploading(false);
             } else {
-              console.log(res);
               setMessage(
                 "There was a error on our side, Please try again later."
               );
@@ -119,10 +114,6 @@ const AddProfileModal = ({ setProfiles, profiles, getProfileData }) => {
               setprofileuser("");
             }
           });
-
-        // console.log(res);
-
-        // const { fileName, filePath } = res.data;
       } catch (err) {
         if (err.response.status === 500) {
           setMessage("There was a problem with the server");
@@ -200,17 +191,28 @@ const AddProfileModal = ({ setProfiles, profiles, getProfileData }) => {
 
   return (
     <div className={classes.root}>
-      <Button type="button" onClick={handleOpen}>
-        Add Profile
-      </Button>
-      <Modal
-        open={open}
-        onClose={handleClose}
-        aria-labelledby="simple-modal-title"
-        aria-describedby="simple-modal-description"
-      >
-        {body}
-      </Modal>
+      <Grid container item xs={12} spacing={3}>
+        <Button type="button" onClick={handleOpen}>
+          Add Profile
+        </Button>
+        {profileLoading && (
+          <img
+            height="75px"
+            width="75px"
+            src="images/loadingSpinner.gif"
+            alt="loading"
+          />
+        )}
+
+        <Modal
+          open={open}
+          onClose={handleClose}
+          aria-labelledby="simple-modal-title"
+          aria-describedby="simple-modal-description"
+        >
+          {body}
+        </Modal>
+      </Grid>
     </div>
   );
 };

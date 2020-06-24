@@ -3,11 +3,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Link from "@material-ui/core/Link";
+
 import Grid from "@material-ui/core/Grid";
-import Box from "@material-ui/core/Box";
+
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
@@ -46,11 +44,11 @@ export default function SignIn({
 }) {
   const classes = useStyles();
 
+  // Component States
   const [signinValues, setSigninValues] = useState({
     signinEmail: "",
     signinPassword: "",
   });
-
   const [signinError, setSigninError] = useState(null);
 
   const handleSigninChange = (event) => {
@@ -60,15 +58,14 @@ export default function SignIn({
       ...signinValues,
       [name]: value,
     });
-    console.log(signinValues);
   };
 
+  // On Signin attempt
   const handleSigninSubmit = async (event) => {
     event.preventDefault();
     const signingIn = await signin(signinValues);
-    console.log(signingIn);
+
     if (signingIn.status) {
-      console.log(signingIn);
       localStorage.setItem("jwt-auth", signingIn.jwt);
       setUser(isAuthenticated());
       setSigninError(null);
@@ -77,8 +74,6 @@ export default function SignIn({
       setSigninError(signingIn.error);
       setUser(null);
     }
-
-    console.log(localStorage.getItem("jwt-auth"));
   };
 
   return (

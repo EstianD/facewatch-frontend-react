@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 
-import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-
 // Compoonents
 import Signin from "./components/Auth/signin";
 import Signup from "./components/Auth/signup";
@@ -13,7 +11,7 @@ import isAuthenticated from "./services/checkAuth";
 
 const App = () => {
   // APP STATES
-  const [jwtState, setjwtState] = useState(null);
+  // const [jwtState, setjwtState] = useState(null);
   const [user, setUser] = useState(isAuthenticated());
 
   const handleLogout = (e) => {

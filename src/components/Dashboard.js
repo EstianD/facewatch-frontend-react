@@ -3,7 +3,6 @@ import axios from "axios";
 
 // Material ui
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Typography from "@material-ui/core/Typography";
 import Container from "@material-ui/core/Container";
 
 import AuthContext from "../hooks/AuthContext";
@@ -16,9 +15,14 @@ import Main from "./Gallery/Main";
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
 
+  const [profiles, setProfiles] = useState([]);
+  const [galleryData, setGalleryData] = useState([]);
+  const [profileLoading, setProfileLoading] = useState(false);
+  const [galleryLoading, setGalleryLoading] = useState(false);
   // FUNCTIONS FOR PROFILE AND GALLERY HOOKS
   // Define function to retrieve data for profiles
   const getProfileData = () => {
+    setProfileLoading(true);
     axios
       .get("/api/profiles/profiles", {
         headers: {
@@ -28,12 +32,13 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .then((res) => {
         setProfiles(res.data["profiles"]);
-        console.log(res);
+        setProfileLoading(false);
+        // console.log(res);
       });
   };
 
   const getGalleryData = () => {
-    console.log("running profiles");
+    setGalleryLoading(true);
     // Update the document title using the browser API
     axios
       .get("/api/profiles/getProfileMatches", {
@@ -44,12 +49,10 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .then((res) => {
         setGalleryData(res.data);
-        console.log(res);
+        setGalleryLoading(false);
       });
   };
 
-  const [profiles, setProfiles] = useState([]);
-  const [galleryData, setGalleryData] = useState([]);
   // Get JWT
   // const jwt = localStorage.getItem("jwt-auth");
   // Get gallery images
@@ -64,6 +67,7 @@ const Dashboard = ({ user, handleLogout }) => {
 
   const onProfileDelete = (e) => {
     const id = e;
+    setProfileLoading(true);
 
     axios
       .post(
@@ -79,12 +83,12 @@ const Dashboard = ({ user, handleLogout }) => {
         }
       )
       .then((res) => {
-        console.log(res);
+        // console.log(res);
         const newProfilesArr = profiles.filter(
           (profile) => profile["id"] !== id
         );
         setProfiles(newProfilesArr);
-        // getGalleryData();
+        setProfileLoading(false);
       });
   };
 
@@ -99,8 +103,13 @@ const Dashboard = ({ user, handleLogout }) => {
             setProfiles={setProfiles}
             onProfileDelete={onProfileDelete}
             getProfileData={getProfileData}
+            profileLoading={profileLoading}
           />
-          <Main galleryData={galleryData} getGalleryData={getGalleryData} />
+          <Main
+            galleryData={galleryData}
+            getGalleryData={getGalleryData}
+            galleryLoading={galleryLoading}
+          />
         </div>
       </Container>
     </AuthContext.Provider>
