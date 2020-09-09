@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
@@ -26,10 +26,15 @@ const useStyles = makeStyles((theme) => ({
 
 const AddGallery = ({ getGalleryData }) => {
   const classes = useStyles();
-
+  const { REACT_APP_NODE_URL } = process.env;
   // State hooks
   const [uploadPerc, setUploadPerc] = useState(0);
   const [uploading, setUploading] = useState(false);
+  const [uploaded, setUploaded] = useState(0);
+
+  useEffect(() => {
+    getGalleryData();
+  }, [uploaded]);
 
   // Handle galery images upload
   const getImages = async (e) => {
@@ -45,16 +50,17 @@ const AddGallery = ({ getGalleryData }) => {
       try {
         setUploading(true);
         await axios
-          .post(`/api/file-upload/gallery`, formData, {
+          .post(`${REACT_APP_NODE_URL}/api/file-upload/gallery`, formData, {
             headers: {
               "Content-Type": `multipart/form-data`,
               "auth-token": jwt,
             },
           })
           .then((res) => {
+            console.log(res);
             if (res.data.status === 200) {
               // setUploadPerc(100);
-              getGalleryData();
+              setUploaded((state) => state + 1);
               setTimeout(() => {
                 // setUploadPerc(0);
                 setUploading(false);
