@@ -24,10 +24,10 @@ API Gateway
 
 ### [Face-Watch](http://facewatch.webdev-env.com)
 
-username: lotr@lotr.com
+username: lotr@lotr.com<br/>
 pass: lotr4321
 
-## (Alternatively you can create you own account.)
+### (Alternatively you can create you own account.)
 
 ## Scripts
 
