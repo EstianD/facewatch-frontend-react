@@ -20,6 +20,15 @@ Rekognition<br/>
 LAMBDA(Python and Nodejs)<br/>
 API Gateway
 
+## Working Demo details
+
+### [Face-Watch](http://facewatch.webdev-env.com)
+
+username: lotr@lotr.com
+pass: lotr4321
+
+## (Alternatively you can create you own account.)
+
 ## Scripts
 
 In the project directory:

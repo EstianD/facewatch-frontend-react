@@ -14,7 +14,7 @@ import Main from "./Gallery/Main";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
-
+  const { REACT_APP_NODE_URL } = process.env;
   const [profiles, setProfiles] = useState([]);
   const [galleryData, setGalleryData] = useState([]);
   const [profileLoading, setProfileLoading] = useState(false);
@@ -24,7 +24,7 @@ const Dashboard = ({ user, handleLogout }) => {
   const getProfileData = () => {
     setProfileLoading(true);
     axios
-      .get("/api/profiles/profiles", {
+      .get(`${REACT_APP_NODE_URL}/api/profiles/profiles`, {
         headers: {
           "Content-Type": `multipart/form-data`,
           "auth-token": jwt,
@@ -37,11 +37,12 @@ const Dashboard = ({ user, handleLogout }) => {
       });
   };
 
+  // Retrieve gallery
   const getGalleryData = () => {
     setGalleryLoading(true);
     // Update the document title using the browser API
     axios
-      .get("/api/profiles/getProfileMatches", {
+      .get(`${REACT_APP_NODE_URL}/api/profiles/getProfileMatches`, {
         headers: {
           "Content-Type": `multipart/form-data`,
           "auth-token": jwt,
@@ -71,7 +72,7 @@ const Dashboard = ({ user, handleLogout }) => {
 
     axios
       .post(
-        "/api/profiles/delete",
+        `${REACT_APP_NODE_URL}/api/profiles/delete`,
         {
           id: id,
         },

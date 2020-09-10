@@ -32,6 +32,7 @@ const AddGallery = ({ getGalleryData }) => {
   const [uploading, setUploading] = useState(false);
   const [uploaded, setUploaded] = useState(0);
 
+  // Check for gallery upload to call new results
   useEffect(() => {
     getGalleryData();
   }, [uploaded]);
@@ -57,9 +58,9 @@ const AddGallery = ({ getGalleryData }) => {
             },
           })
           .then((res) => {
-            console.log(res);
+            // Check for successful response
             if (res.data.status === 200) {
-              // setUploadPerc(100);
+              // Set state for gallery update
               setUploaded((state) => state + 1);
               setTimeout(() => {
                 // setUploadPerc(0);
