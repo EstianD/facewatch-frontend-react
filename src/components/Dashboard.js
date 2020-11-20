@@ -3,7 +3,7 @@ import axios from "axios";
 
 // Material ui
 import CssBaseline from "@material-ui/core/CssBaseline";
-import Container from "@material-ui/core/Container";
+import { Container, Grid } from "@material-ui/core";
 
 import AuthContext from "../hooks/AuthContext";
 
@@ -11,9 +11,11 @@ import AuthContext from "../hooks/AuthContext";
 import Header from "./Header/Header";
 import Profiles from "./Profiles/Profiles";
 import Main from "./Gallery/Main";
+import Folder from "./Gallery/Folder";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
+
   const { REACT_APP_NODE_URL } = process.env;
   const [profiles, setProfiles] = useState([]);
   const [galleryData, setGalleryData] = useState([]);
@@ -24,13 +26,14 @@ const Dashboard = ({ user, handleLogout }) => {
   const getProfileData = () => {
     setProfileLoading(true);
     axios
-      .get(`${REACT_APP_NODE_URL}/api/profiles/profiles`, {
+      .get(`${REACT_APP_NODE_URL}/profiles/profiles`, {
         headers: {
           "Content-Type": `multipart/form-data`,
           "auth-token": jwt,
         },
       })
       .then((res) => {
+        console.log("RESPONSE: ", res);
         setProfiles(res.data["profiles"]);
         setProfileLoading(false);
         // console.log(res);
@@ -42,29 +45,41 @@ const Dashboard = ({ user, handleLogout }) => {
     setGalleryLoading(true);
     // Update the document title using the browser API
     axios
-      .get(`${REACT_APP_NODE_URL}/api/profiles/getProfileMatches`, {
+      .get(`${REACT_APP_NODE_URL}/profiles/getProfileMatches`, {
         headers: {
           "Content-Type": `multipart/form-data`,
           "auth-token": jwt,
         },
       })
       .then((res) => {
+        console.log(res);
         setGalleryData(res.data);
         setGalleryLoading(false);
       });
   };
 
-  // Get JWT
-  // const jwt = localStorage.getItem("jwt-auth");
-  // Get gallery images
-  useEffect(() => {
-    getGalleryData();
-  }, [profiles]);
+  function renderFolders() {
+    const folderArray = galleryData.map((profile) => {
+      console.log("PR", profile);
+
+      return (
+        <Grid container item xs={12} spacing={3}>
+          <Folder profile={profile} />
+        </Grid>
+      );
+    });
+    return folderArray;
+  }
 
   // Get profiles
   useEffect(() => {
     getProfileData();
   }, []);
+
+  // Get gallery images
+  useEffect(() => {
+    getGalleryData();
+  }, [profiles]);
 
   const onProfileDelete = (e) => {
     const id = e;
@@ -72,7 +87,7 @@ const Dashboard = ({ user, handleLogout }) => {
 
     axios
       .post(
-        `${REACT_APP_NODE_URL}/api/profiles/delete`,
+        `${REACT_APP_NODE_URL}/profiles/delete`,
         {
           id: id,
         },
@@ -106,11 +121,13 @@ const Dashboard = ({ user, handleLogout }) => {
             getProfileData={getProfileData}
             profileLoading={profileLoading}
           />
+
           <Main
             galleryData={galleryData}
             getGalleryData={getGalleryData}
             galleryLoading={galleryLoading}
           />
+          {renderFolders()}
         </div>
       </Container>
     </AuthContext.Provider>

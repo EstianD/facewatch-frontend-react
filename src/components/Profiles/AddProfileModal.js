@@ -54,6 +54,7 @@ const AddProfileModal = ({
   const [message, setMessage] = useState("");
   // const [uploadPerc, setUploadPerc] = useState(0);
   const [uploading, setUploading] = useState(false);
+  const { REACT_APP_NODE_URL } = process.env;
 
   const getImage = (e) => {
     const files = e.target.files;
@@ -84,7 +85,7 @@ const AddProfileModal = ({
       try {
         setUploading(true);
         await axios
-          .post(`/api/file-upload/profile`, formData, {
+          .post(`${REACT_APP_NODE_URL}/file-upload/profile`, formData, {
             headers: {
               "Content-Type": `multipart/form-data`,
               "auth-token": jwt,

@@ -2,7 +2,7 @@
   "name": "frontend",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:6000",
+  "proxy": "http://localhost:4000",
   "dependencies": {
     "@material-ui/core": "^4.9.13",
     "@material-ui/icons": "^4.9.1",
@@ -11,7 +11,9 @@
     "@testing-library/react": "^9.5.0",
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
+    "flat-color-icons": "^1.1.0",
     "jwt-decode": "^2.2.0",
+    "material-ui-image": "^3.3.0",
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
     "react-confirm-alert": "^2.6.1",

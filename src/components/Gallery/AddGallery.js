@@ -51,7 +51,7 @@ const AddGallery = ({ getGalleryData }) => {
       try {
         setUploading(true);
         await axios
-          .post(`${REACT_APP_NODE_URL}/api/file-upload/gallery`, formData, {
+          .post(`${REACT_APP_NODE_URL}/file-upload/gallery`, formData, {
             headers: {
               "Content-Type": `multipart/form-data`,
               "auth-token": jwt,

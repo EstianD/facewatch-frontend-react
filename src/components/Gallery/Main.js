@@ -1,5 +1,8 @@
 import React from "react";
 import Grid from "@material-ui/core/Grid";
+// Import flat icons
+// import { FcFolder } from "react-icons/fc";
+// import folderIcon from "svg/folder.svg";
 
 import AddGallery from "./AddGallery";
 import Gallery from "./Gallery";
