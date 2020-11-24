@@ -10,6 +10,8 @@ import Dashboard from "./components/Dashboard";
 import isAuthenticated from "./services/checkAuth";
 
 const App = () => {
+  console.log("APP");
+
   // APP STATES
   // const [jwtState, setjwtState] = useState(null);
   const [user, setUser] = useState(isAuthenticated());

@@ -21,6 +21,12 @@ const Dashboard = ({ user, handleLogout }) => {
   const [galleryData, setGalleryData] = useState([]);
   const [profileLoading, setProfileLoading] = useState(false);
   const [galleryLoading, setGalleryLoading] = useState(false);
+
+  // Folders
+  const [view, setView] = useState("folder");
+  const [selectedFolder, setSelectedFolder] = useState({});
+
+  console.log("DASHBOARD");
   // FUNCTIONS FOR PROFILE AND GALLERY HOOKS
   // Define function to retrieve data for profiles
   const getProfileData = () => {
@@ -33,7 +39,7 @@ const Dashboard = ({ user, handleLogout }) => {
         },
       })
       .then((res) => {
-        console.log("RESPONSE: ", res);
+        console.log("PROFILES: ", res);
         setProfiles(res.data["profiles"]);
         setProfileLoading(false);
         // console.log(res);
@@ -52,24 +58,24 @@ const Dashboard = ({ user, handleLogout }) => {
         },
       })
       .then((res) => {
-        console.log(res);
+        console.log("MATCHES: ", res);
         setGalleryData(res.data);
         setGalleryLoading(false);
       });
   };
 
-  function renderFolders() {
-    const folderArray = galleryData.map((profile) => {
-      console.log("PR", profile);
+  // function renderFolders() {
+  //   const folderArray = galleryData.map((profile) => {
+  //     console.log("PR", profile);
 
-      return (
-        <Grid container item xs={12} spacing={3}>
-          <Folder profile={profile} />
-        </Grid>
-      );
-    });
-    return folderArray;
-  }
+  //     return (
+  //       <Grid container item xs={12} spacing={3}>
+  //         <Folder profile={profile} />
+  //       </Grid>
+  //     );
+  //   });
+  //   return folderArray;
+  // }
 
   // Get profiles
   useEffect(() => {
@@ -108,6 +114,27 @@ const Dashboard = ({ user, handleLogout }) => {
       });
   };
 
+  // Render folders function
+  const renderFolders = () => {
+    console.log("FOLDER");
+    return (
+      <Grid container item xs={12} spacing={3}>
+        <Grid item xs={3}>
+          <Folder />
+        </Grid>
+        <Grid item xs={3}>
+          <Folder />
+        </Grid>
+        <Grid item xs={3}>
+          <Folder />
+        </Grid>
+        <Grid item xs={3}>
+          <Folder />
+        </Grid>
+      </Grid>
+    );
+  };
+
   return (
     <AuthContext.Provider value={user}>
       <CssBaseline />
@@ -121,13 +148,15 @@ const Dashboard = ({ user, handleLogout }) => {
             getProfileData={getProfileData}
             profileLoading={profileLoading}
           />
-
-          <Main
+          {view == "folder" && renderFolders()}
+          {/* <Main
             galleryData={galleryData}
             getGalleryData={getGalleryData}
             galleryLoading={galleryLoading}
-          />
-          {renderFolders()}
+          /> */}
+          {/* {renderFolders()} */}
+          {/* <AddGallery getGalleryData={getGalleryData} />
+          <Gallery galleryData={galleryData} />  */}
         </div>
       </Container>
     </AuthContext.Provider>
