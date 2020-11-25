@@ -14,21 +14,21 @@ const useStyles = makeStyles((theme) => ({
   },
   folderImg: {
     "&:hover": {
-      backgroundColor: "rgb(247, 247, 247)",
-      border: "1px solid black",
+      // backgroundColor: "rgb(247, 247, 247)",
+      // border: "1px solid black",
       transform: "scale(1.1)",
       transition: "transform 0.5s ease",
     },
   },
 }));
 
-function Folder({ profile }) {
+function Folder({ profile, idx, handleFolderSelect }) {
   const classes = useStyles();
-
-  // console.log("PROFILE: ", profile);
+  console.log("ID: ", idx);
+  console.log("PROFILE: ", profile);
   return (
     <div>
-      <Grid item xs={"auto"}>
+      <Grid item xs={"auto"} onClick={() => handleFolderSelect(idx)}>
         {/* <Paper className={classes.paper}> */}
         <img
           height="200px"
@@ -36,7 +36,9 @@ function Folder({ profile }) {
           src="images/folder.svg"
           className={classes.folderImg}
         />
-        <p>Profile (2)</p>
+        <p>
+          {profile.profileName} ({profile.matchLength})
+        </p>
         {/* </Paper> */}
       </Grid>
     </div>

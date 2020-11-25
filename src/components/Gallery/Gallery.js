@@ -5,6 +5,7 @@ import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import { v4 as uuidv4 } from "uuid";
+import GalleryImage from "./GalleryImage";
 
 const useStyles = makeStyles((theme) => ({
   root: {

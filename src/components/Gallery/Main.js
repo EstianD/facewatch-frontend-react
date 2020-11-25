@@ -81,8 +81,10 @@ const Main = ({ galleryData, getGalleryData, galleryLoading }) => {
   }
 
   {
-    /* <AddGallery getGalleryData={getGalleryData} />
-      <Gallery galleryData={galleryData} /> */
+    // <AddGallery getGalleryData={getGalleryData} />
+    {
+      /* <Gallery galleryData={galleryData} />  */
+    }
   }
   {
     /* </Grid> */

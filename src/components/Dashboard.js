@@ -12,6 +12,9 @@ import Header from "./Header/Header";
 import Profiles from "./Profiles/Profiles";
 import Main from "./Gallery/Main";
 import Folder from "./Gallery/Folder";
+import GalleryImage from "../components/Gallery/GalleryImage";
+import AddGallery from "./Gallery/AddGallery";
+import Gallery from "./Gallery/Gallery";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -64,26 +67,17 @@ const Dashboard = ({ user, handleLogout }) => {
       });
   };
 
-  // function renderFolders() {
-  //   const folderArray = galleryData.map((profile) => {
-  //     console.log("PR", profile);
-
-  //     return (
-  //       <Grid container item xs={12} spacing={3}>
-  //         <Folder profile={profile} />
-  //       </Grid>
-  //     );
-  //   });
-  //   return folderArray;
-  // }
-
   // Get profiles
   useEffect(() => {
+    console.log("GET PROFILE EFFECT");
+
     getProfileData();
   }, []);
 
   // Get gallery images
   useEffect(() => {
+    console.log("GET GALLERY EFFECT");
+
     getGalleryData();
   }, [profiles]);
 
@@ -114,25 +108,64 @@ const Dashboard = ({ user, handleLogout }) => {
       });
   };
 
-  // Render folders function
+  // Function for view change
+  const handleFolderSelect = (id) => {
+    // console.log(id);
+    // console.log(galleryData[id]);
+    setView("gallery");
+    setSelectedFolder(galleryData[id]);
+  };
+
+  // Render folders view
   const renderFolders = () => {
     console.log("FOLDER");
-    return (
-      <Grid container item xs={12} spacing={3}>
-        <Grid item xs={3}>
-          <Folder />
+    // Check if state for gallery has been set
+    // Load folders
+    if (galleryData.length > 0) {
+      console.log("GALLERY DATA LOADED: ", galleryData);
+      return (
+        <Grid container item xs={12} spacing={3}>
+          {galleryData.map((profile, idx) => {
+            return (
+              <Grid item xs={3} key={idx}>
+                <Folder
+                  profile={profile}
+                  handleFolderSelect={handleFolderSelect}
+                  idx={idx}
+                />
+              </Grid>
+            );
+          })}
+          <AddGallery getGalleryData={getGalleryData} />
         </Grid>
-        <Grid item xs={3}>
-          <Folder />
+      );
+    }
+  };
+
+  // Render gallery view
+  const renderGallery = () => {
+    console.log("GALLERY");
+    // Check if state for gallery has been set
+    // Load folders
+    if (galleryData.length > 0 && selectedFolder) {
+      return (
+        <Grid container item xs={12} spacing={3}>
+          {console.log("gallery------")}
+
+          {console.log(selectedFolder)}
+
+          {selectedFolder.matches.map((image, idx) => {
+            return (
+              <Grid item xs={"auto"}>
+                <GalleryImage image={image} />
+              </Grid>
+            );
+          })}
+
+          {/* <Gallery galleryData={galleryData} /> */}
         </Grid>
-        <Grid item xs={3}>
-          <Folder />
-        </Grid>
-        <Grid item xs={3}>
-          <Folder />
-        </Grid>
-      </Grid>
-    );
+      );
+    }
   };
 
   return (
@@ -149,6 +182,7 @@ const Dashboard = ({ user, handleLogout }) => {
             profileLoading={profileLoading}
           />
           {view == "folder" && renderFolders()}
+          {view == "gallery" && renderGallery()}
           {/* <Main
             galleryData={galleryData}
             getGalleryData={getGalleryData}
