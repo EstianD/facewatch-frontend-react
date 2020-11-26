@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
+import "./index.css";
 
 // Compoonents
 import Signin from "./components/Auth/signin";

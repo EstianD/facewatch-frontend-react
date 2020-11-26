@@ -12,6 +12,7 @@
     "@testing-library/user-event": "^7.2.1",
     "axios": "^0.19.2",
     "flat-color-icons": "^1.1.0",
+    "framer-motion": "^2.9.4",
     "jwt-decode": "^2.2.0",
     "material-ui-image": "^3.3.0",
     "prop-types": "^15.7.2",

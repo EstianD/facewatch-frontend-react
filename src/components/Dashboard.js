@@ -1,5 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 // Material ui
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -15,6 +16,8 @@ import Folder from "./Gallery/Folder";
 import GalleryImage from "../components/Gallery/GalleryImage";
 import AddGallery from "./Gallery/AddGallery";
 import Gallery from "./Gallery/Gallery";
+import ImageModal from "./Gallery/ImageModal";
+import FolderView from "./Gallery/FolderView";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -28,6 +31,9 @@ const Dashboard = ({ user, handleLogout }) => {
   // Folders
   const [view, setView] = useState("folder");
   const [selectedFolder, setSelectedFolder] = useState({});
+
+  // Images
+  const [selectedImg, setSelectedImg] = useState(null);
 
   console.log("DASHBOARD");
   // FUNCTIONS FOR PROFILE AND GALLERY HOOKS
@@ -142,32 +148,6 @@ const Dashboard = ({ user, handleLogout }) => {
     }
   };
 
-  // Render gallery view
-  const renderGallery = () => {
-    console.log("GALLERY");
-    // Check if state for gallery has been set
-    // Load folders
-    if (galleryData.length > 0 && selectedFolder) {
-      return (
-        <Grid container item xs={12} spacing={3}>
-          {console.log("gallery------")}
-
-          {console.log(selectedFolder)}
-
-          {selectedFolder.matches.map((image, idx) => {
-            return (
-              <Grid item xs={"auto"}>
-                <GalleryImage image={image} />
-              </Grid>
-            );
-          })}
-
-          {/* <Gallery galleryData={galleryData} /> */}
-        </Grid>
-      );
-    }
-  };
-
   return (
     <AuthContext.Provider value={user}>
       <CssBaseline />
@@ -181,13 +161,25 @@ const Dashboard = ({ user, handleLogout }) => {
             getProfileData={getProfileData}
             profileLoading={profileLoading}
           />
-          {view == "folder" && renderFolders()}
-          {view == "gallery" && renderGallery()}
-          {/* <Main
-            galleryData={galleryData}
-            getGalleryData={getGalleryData}
-            galleryLoading={galleryLoading}
-          /> */}
+          {view == "folder" && (
+            <FolderView
+              galleryData={galleryData}
+              handleFolderSelect={handleFolderSelect}
+            />
+          )}
+          {view == "gallery" && (
+            <Gallery
+              galleryData={galleryData}
+              selectedFolder={selectedFolder}
+              setSelectedImg={setSelectedImg}
+            />
+          )}
+          {selectedImg && (
+            <ImageModal
+              selectedImg={selectedImg}
+              setSelectedImg={setSelectedImg}
+            />
+          )}
           {/* {renderFolders()} */}
           {/* <AddGallery getGalleryData={getGalleryData} />
           <Gallery galleryData={galleryData} />  */}
