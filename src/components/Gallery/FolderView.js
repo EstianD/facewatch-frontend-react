@@ -15,8 +15,8 @@ function FolderView({ galleryData, handleFolderSelect }) {
             transition={{ delay: 1 }}
           >
             <motion.img src="images/folder.svg" alt="some image" />
-            <p>
-              {profile.profileName} - {profile.matchLength}
+            <p className="folder-text">
+              {profile.profileName} ({profile.matchLength})
             </p>
           </motion.div>
         );

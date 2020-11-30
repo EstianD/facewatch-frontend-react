@@ -11,13 +11,16 @@ import AuthContext from "../hooks/AuthContext";
 // Components
 import Header from "./Header/Header";
 import Profiles from "./Profiles/Profiles";
-import Main from "./Gallery/Main";
+import AddProfileModal from "../components/Profiles/AddProfileModal";
+// import Main from "./Gallery/Main";
+import UploadImage from "./Gallery/UploadImage";
 import Folder from "./Gallery/Folder";
 import GalleryImage from "../components/Gallery/GalleryImage";
 import AddGallery from "./Gallery/AddGallery";
 import Gallery from "./Gallery/Gallery";
 import ImageModal from "./Gallery/ImageModal";
 import FolderView from "./Gallery/FolderView";
+import ProfileList from "./Profiles/ProfileList";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -122,45 +125,28 @@ const Dashboard = ({ user, handleLogout }) => {
     setSelectedFolder(galleryData[id]);
   };
 
-  // Render folders view
-  const renderFolders = () => {
-    console.log("FOLDER");
-    // Check if state for gallery has been set
-    // Load folders
-    if (galleryData.length > 0) {
-      console.log("GALLERY DATA LOADED: ", galleryData);
-      return (
-        <Grid container item xs={12} spacing={3}>
-          {galleryData.map((profile, idx) => {
-            return (
-              <Grid item xs={3} key={idx}>
-                <Folder
-                  profile={profile}
-                  handleFolderSelect={handleFolderSelect}
-                  idx={idx}
-                />
-              </Grid>
-            );
-          })}
-          <AddGallery getGalleryData={getGalleryData} />
-        </Grid>
-      );
-    }
-  };
-
   return (
     <AuthContext.Provider value={user}>
       <CssBaseline />
       <Container maxWidth="md">
         <div>
           <Header handleLogout={handleLogout} />
-          <Profiles
+          <AddProfileModal
+            setProfiles={setProfiles}
+            profiles={profiles}
+            getProfileData={getProfileData}
+            profileLoading={profileLoading}
+          />
+          <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
+          <UploadImage />
+          {/* <Profiles
             profiles={profiles}
             setProfiles={setProfiles}
             onProfileDelete={onProfileDelete}
             getProfileData={getProfileData}
             profileLoading={profileLoading}
-          />
+          /> */}
+
           {view == "folder" && (
             <FolderView
               galleryData={galleryData}
@@ -180,9 +166,10 @@ const Dashboard = ({ user, handleLogout }) => {
               setSelectedImg={setSelectedImg}
             />
           )}
+
           {/* {renderFolders()} */}
-          {/* <AddGallery getGalleryData={getGalleryData} />
-          <Gallery galleryData={galleryData} />  */}
+          {/* <AddGallery getGalleryData={getGalleryData} /> */}
+          {/* { <Gallery galleryData={galleryData} />   */}
         </div>
       </Container>
     </AuthContext.Provider>

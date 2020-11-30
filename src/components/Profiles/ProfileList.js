@@ -5,8 +5,8 @@ import Profile from "./Profile";
 
 const ProfileList = ({ profiles, onProfileDelete }) => {
   return (
-    <div>
-      <Grid container item xs={12} spacing={3}>
+    <div className="profile-grid">
+      {/* <Grid container item xs={12} spacing={3}>
         {profiles.map((profile) => {
           return (
             <Grid item xs={3} key={profile["id"]}>
@@ -14,7 +14,18 @@ const ProfileList = ({ profiles, onProfileDelete }) => {
             </Grid>
           );
         })}
-      </Grid>
+        
+      </Grid> */}
+
+      {/*  */}
+
+      {profiles.map((profile) => {
+        return (
+          <div key={profile["id"]} className="profile-div">
+            <Profile profile={profile} onProfileDelete={onProfileDelete} />
+          </div>
+        );
+      })}
     </div>
   );
 };

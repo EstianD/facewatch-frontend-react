@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 
 import ProfileMsg from "./ProfileMsg";
 import AddProfileProgressBar from "./AddProfileProgressBar";
+import ErrorMsg from "./ErrorMsg";
 
 import axios from "axios";
 
@@ -52,16 +53,23 @@ const AddProfileModal = ({
   const [file, setFile] = useState(false);
   const [profileuser, setprofileuser] = useState("");
   const [message, setMessage] = useState("");
+  const [error, setError] = useState(null);
   // const [uploadPerc, setUploadPerc] = useState(0);
   const [uploading, setUploading] = useState(false);
   const { REACT_APP_NODE_URL } = process.env;
 
+  // Accepted file types
+  const types = ["image/png", "image/jpeg"];
+
   const getImage = (e) => {
-    const files = e.target.files;
-    // console.log(files[0]);
-    if (files && files.length > 0) {
-      const file = files[0];
+    const file = e.target.files[0];
+    console.log(file);
+    if (file && types.includes(file.type)) {
+      // const file = files[0];
       setFile(file);
+    } else {
+      setFile(null);
+      setError("Please select image file of PNG or JPEG.");
     }
   };
 
@@ -81,7 +89,7 @@ const AddProfileModal = ({
     formData.append("name", profileuser);
 
     // Check if file is selected with profile
-    if (file && profileuser) {
+    if (file && profileuser && !error) {
       try {
         setUploading(true);
         await axios
@@ -143,6 +151,7 @@ const AddProfileModal = ({
       </p>
       <form className={classes.form} noValidate onSubmit={handleProfileSubmit}>
         {message ? <ProfileMsg msg={message} /> : null}
+        {error ? <ErrorMsg error={error} /> : null}
         <TextField
           variant="outlined"
           margin="normal"

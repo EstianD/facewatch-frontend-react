@@ -12,13 +12,13 @@ const Profiles = ({
 }) => {
   return (
     <div>
-      <AddProfileModal
+      {/* <AddProfileModal
         setProfiles={setProfiles}
         profiles={profiles}
         getProfileData={getProfileData}
         profileLoading={profileLoading}
-      />
-      <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
+      /> */}
+      {/* <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} /> */}
     </div>
   );
 };

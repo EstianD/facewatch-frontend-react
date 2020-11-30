@@ -18,7 +18,7 @@ const useStyles = makeStyles({
     maxWidth: 345,
   },
   media: {
-    height: 140,
+    height: 160,
   },
 });
 
@@ -41,30 +41,45 @@ const Profile = ({ profile, onProfileDelete }) => {
     });
   };
 
+  const handleProfileHover = () => {
+    console.log("enter");
+  };
+
+  const handleProfileLeave = () => {
+    console.log("left");
+  };
+
   return (
-    <Card className={classes.root} key={profile["id"]}>
-      <CardActionArea>
-        <CardMedia
-          className={classes.media}
-          image={profile["image"]}
-          title={profile["profileName"]}
-        />
-        <CardContent>
-          <Typography gutterBottom variant="h5" component="h2">
-            {profile["profileName"]}
-          </Typography>
-        </CardContent>
-      </CardActionArea>
-      <CardActions>
-        <Button
-          size="small"
-          color="primary"
-          onClick={(e) => confirmDelete(profile["id"])}
-        >
-          <DeleteIcon />
-        </Button>
-      </CardActions>
-    </Card>
+    <div
+      className={classes.root}
+      onMouseEnter={() => handleProfileHover()}
+      onMouseLeave={() => handleProfileLeave()}
+    >
+      <Card>
+        <CardActionArea>
+          <div className="profile-img">
+            <CardMedia
+              className={classes.media}
+              image={profile["image"]}
+              title={profile["profileName"]}
+            />
+          </div>
+          <CardContent>
+            <Typography gutterBottom variant="subtitle1" component="h2">
+              {profile["profileName"]}
+            </Typography>
+            <div className="profile-actions">
+              <div
+                className="profile-delete"
+                onClick={(e) => confirmDelete(profile["id"])}
+              >
+                &#10060;
+              </div>
+            </div>
+          </CardContent>
+        </CardActionArea>
+      </Card>
+    </div>
   );
 };
 

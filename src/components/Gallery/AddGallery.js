@@ -43,9 +43,14 @@ const AddGallery = ({ getGalleryData }) => {
     const formData = new FormData();
     let files = e.target.files;
 
+    console.log("FILES: ", files);
+
     for (let i = 0; i < files.length; i++) {
       formData.append(`image`, files[i]);
     }
+    // console.log(files.length);
+    console.log("FORM DATA: ", formData.getAll("image"));
+    return;
 
     if (formData) {
       try {
