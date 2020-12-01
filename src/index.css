@@ -12,6 +12,11 @@ code {
     monospace;
 }
 
+.dashboard-container {
+  margin: 0 auto;
+  padding: 0 10% 10% 10%;
+}
+
 /* section grids */
 .img-grid {
   margin: 20px auto;
@@ -32,6 +37,44 @@ code {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 20px;
+}
+
+.add-profile-grid {
+  /* margin: 10px auto; */
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+  /* flex-direction: row; */
+}
+
+.add-image-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+.add-profile-col {
+  flex: 25%;
+  max-width: 10%;
+  padding: 0 4px;
+}
+
+.add-profile-col img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 90%;
+}
+
+.add-image-col {
+  flex: 25%;
+  max-width: 100%;
+  padding: 0 4px;
+}
+
+.add-image-col img {
+  margin-top: 8px;
+  vertical-align: middle;
+  width: 100%;
 }
 
 .img-wrap {
@@ -70,6 +113,7 @@ code {
 
 .profile-div:hover .profile-img {
   opacity: 0.3;
+  filter: grayscale(100%);
 }
 
 .profile-div:hover .profile-actions {
@@ -108,6 +152,12 @@ code {
   text-align: center;
 }
 
+/* Profile component */
+
+.profile-form-input {
+  display: none;
+}
+
 /* Folder View styles */
 /* .folder-wrap {
   overflow: hidden;
@@ -144,6 +194,11 @@ code {
   display: none;
 }
 
+.add-image img {
+  height: 100%;
+  width: 100%;
+}
+
 /* Modal styles */
 .backdrop {
   position: fixed;
@@ -161,4 +216,34 @@ code {
   margin: 60px auto;
   box-shadow: 3px 5px 7px rgba(0, 0, 0.5);
   border: 3px solid white;
+}
+
+/* Screen size for add-profile column */
+@media screen and (max-width: 800px) {
+  .add-profile-col {
+    flex: 50%;
+    max-width: 15%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .add-profile-col {
+    flex: 50%;
+    max-width: 15%;
+  }
+}
+
+/* Screen size for add-image column */
+@media screen and (max-width: 800px) {
+  .add-image-col {
+    flex: 50%;
+    max-width: 50%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .add-image-col {
+    flex: 50%;
+    max-width: 50%;
+  }
 }

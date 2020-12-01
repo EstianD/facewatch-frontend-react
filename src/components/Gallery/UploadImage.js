@@ -4,7 +4,7 @@ import axios from "axios";
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
 
-function UploadImage() {
+function UploadImage({ getGalleryData }) {
   const [files, setFiles] = useState(null);
   const [error, setError] = useState(null);
   const [uploaded, setUploaded] = useState(null);
@@ -34,7 +34,6 @@ function UploadImage() {
         }
       }
       setFiles(formData.getAll("image"));
-      console.log("After");
 
       // Set error notifications
       setError("");
@@ -54,11 +53,13 @@ function UploadImage() {
             if (res.data.status === 200) {
               // Set state for gallery update
               //   setUploaded((state) => state + 1);
-              setUploaded("Files uploaded successfully");
+
               setTimeout(() => {
+                getGalleryData();
+                setUploaded("Files uploaded successfully");
                 // setUploadPerc(0);
                 //  setUploading(false);
-              }, 1000);
+              }, 2000);
             }
           });
       } catch (err) {}
@@ -66,31 +67,41 @@ function UploadImage() {
   };
 
   return (
-    <form>
-      <input
-        accept="image/*"
-        id="imageAdd"
-        type="file"
-        className="img-add--input"
-        multiple
-        onChange={handleUploadImages}
-      />
+    <div>
+      <div className="add-image-grid">
+        <form>
+          <input
+            accept="image/*"
+            id="imageAdd"
+            type="file"
+            className="img-add--input"
+            multiple
+            onChange={handleUploadImages}
+          />
+          <div className="add-image-col">
+            <label htmlFor="imageAdd">
+              {/* <Button
+              color="primary"
+              aria-label="add-image"
+              className="img-add--button"
+              component="span"
+            > */}
+              {/* <AddIcon fontSize="large" /> */}
 
-      <label htmlFor="imageAdd">
-        <Button
-          color="primary"
-          aria-label="add-image"
-          className="img-add--button"
-          component="span"
-        >
-          <AddIcon fontSize="large" />
-        </Button>
-      </label>
-      <div className="upload-message">
-        {error && <div className="error">{error}</div>}
-        {files && <div>{uploaded}</div>}
+              <div className="add-image">
+                <img src="images/add-image.png" />
+              </div>
+              {/* </Button> */}
+            </label>
+          </div>
+          <div className="upload-message">
+            {error && <div className="error">{error}</div>}
+            {files && <div>{uploaded}</div>}
+          </div>
+        </form>
       </div>
-    </form>
+      <h3>Gallery</h3>
+    </div>
   );
 }
 

@@ -34,6 +34,7 @@ const Dashboard = ({ user, handleLogout }) => {
   // Folders
   const [view, setView] = useState("folder");
   const [selectedFolder, setSelectedFolder] = useState({});
+  const [selectedFolderId, setSelectedFolderId] = useState(null);
 
   // Images
   const [selectedImg, setSelectedImg] = useState(null);
@@ -55,6 +56,13 @@ const Dashboard = ({ user, handleLogout }) => {
         setProfiles(res.data["profiles"]);
         setProfileLoading(false);
         // console.log(res);
+      })
+      .catch((error) => {
+        console.log("ERROR: ", error);
+        if (error.response.status == 400) {
+          localStorage.removeItem("jwt-auth");
+          handleLogout();
+        }
       });
   };
 
@@ -73,6 +81,13 @@ const Dashboard = ({ user, handleLogout }) => {
         console.log("MATCHES: ", res);
         setGalleryData(res.data);
         setGalleryLoading(false);
+      })
+      .catch((error) => {
+        console.log("ERROR: ", error);
+        if (error.response.status == 400) {
+          localStorage.removeItem("jwt-auth");
+          handleLogout();
+        }
       });
   };
 
@@ -122,56 +137,50 @@ const Dashboard = ({ user, handleLogout }) => {
     // console.log(id);
     // console.log(galleryData[id]);
     setView("gallery");
+    setSelectedFolderId(id);
     setSelectedFolder(galleryData[id]);
   };
 
   return (
     <AuthContext.Provider value={user}>
       <CssBaseline />
-      <Container maxWidth="md">
-        <div>
-          <Header handleLogout={handleLogout} />
-          <AddProfileModal
-            setProfiles={setProfiles}
-            profiles={profiles}
-            getProfileData={getProfileData}
-            profileLoading={profileLoading}
+      {/* <Container maxWidth="md"> */}
+      <div className="dashboard-container">
+        <Header handleLogout={handleLogout} />
+        <AddProfileModal
+          setProfiles={setProfiles}
+          profiles={profiles}
+          getProfileData={getProfileData}
+          profileLoading={profileLoading}
+        />
+        <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
+        <UploadImage getGalleryData={getGalleryData} />
+
+        {view == "folder" && (
+          <FolderView
+            galleryData={galleryData}
+            handleFolderSelect={handleFolderSelect}
           />
-          <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
-          <UploadImage />
-          {/* <Profiles
-            profiles={profiles}
-            setProfiles={setProfiles}
-            onProfileDelete={onProfileDelete}
-            getProfileData={getProfileData}
-            profileLoading={profileLoading}
-          /> */}
+        )}
+        {view == "gallery" && (
+          <Gallery
+            galleryData={galleryData}
+            selectedFolder={selectedFolder}
+            setSelectedImg={setSelectedImg}
+          />
+        )}
+        {selectedImg && (
+          <ImageModal
+            selectedImg={selectedImg}
+            setSelectedImg={setSelectedImg}
+          />
+        )}
 
-          {view == "folder" && (
-            <FolderView
-              galleryData={galleryData}
-              handleFolderSelect={handleFolderSelect}
-            />
-          )}
-          {view == "gallery" && (
-            <Gallery
-              galleryData={galleryData}
-              selectedFolder={selectedFolder}
-              setSelectedImg={setSelectedImg}
-            />
-          )}
-          {selectedImg && (
-            <ImageModal
-              selectedImg={selectedImg}
-              setSelectedImg={setSelectedImg}
-            />
-          )}
-
-          {/* {renderFolders()} */}
-          {/* <AddGallery getGalleryData={getGalleryData} /> */}
-          {/* { <Gallery galleryData={galleryData} />   */}
-        </div>
-      </Container>
+        {/* {renderFolders()} */}
+        {/* <AddGallery getGalleryData={getGalleryData} /> */}
+        {/* { <Gallery galleryData={galleryData} />   */}
+      </div>
+      {/* </Container> */}
     </AuthContext.Provider>
   );
 };

@@ -27,7 +27,7 @@ const Profile = ({ profile, onProfileDelete }) => {
 
   const confirmDelete = (e) => {
     confirmAlert({
-      title: "Confirm to submit",
+      title: "Delete Profile",
       message: "Are you sure you want to delete this profile?",
       buttons: [
         {
@@ -41,20 +41,8 @@ const Profile = ({ profile, onProfileDelete }) => {
     });
   };
 
-  const handleProfileHover = () => {
-    console.log("enter");
-  };
-
-  const handleProfileLeave = () => {
-    console.log("left");
-  };
-
   return (
-    <div
-      className={classes.root}
-      onMouseEnter={() => handleProfileHover()}
-      onMouseLeave={() => handleProfileLeave()}
-    >
+    <div className={classes.root}>
       <Card>
         <CardActionArea>
           <div className="profile-img">

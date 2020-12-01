@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { motion } from "framer-motion";
 
@@ -10,6 +10,10 @@ import GalleryImage from "./GalleryImage";
 
 const Gallery = ({ galleryData, selectedFolder, setSelectedImg }) => {
   console.log("GALLERY: ", galleryData);
+
+  useEffect(() => {
+    console.log("HIER SO!!!!!");
+  }, [galleryData]);
 
   return (
     <div className="img-grid">

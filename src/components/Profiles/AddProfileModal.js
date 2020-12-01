@@ -146,6 +146,7 @@ const AddProfileModal = ({
   const body = (
     <div style={modalStyle} className={classes.paper}>
       <h2 id="simple-modal-title">Add Profile</h2>
+
       <p id="simple-modal-description">
         Add a profile to fillter your images by.
       </p>
@@ -200,29 +201,23 @@ const AddProfileModal = ({
   );
 
   return (
-    <div className={classes.root}>
-      <Grid container item xs={12} spacing={3}>
-        <Button type="button" onClick={handleOpen}>
-          Add Profile
-        </Button>
-        {profileLoading && (
-          <img
-            height="75px"
-            width="75px"
-            src="images/loadingSpinner.gif"
-            alt="loading"
-          />
-        )}
-
-        <Modal
-          open={open}
-          onClose={handleClose}
-          aria-labelledby="simple-modal-title"
-          aria-describedby="simple-modal-description"
-        >
-          {body}
-        </Modal>
-      </Grid>
+    <div>
+      <div className="add-profile-grid">
+        {/* <div className="add-profile-col"></div> */}
+        <div className="add-profile-col" onClick={handleOpen}>
+          <img src="images/add-profile-icon-med.png" />
+        </div>
+      </div>
+      <h3>Profiles</h3>
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="simple-modal-title"
+        aria-describedby="simple-modal-description"
+      >
+        {body}
+      </Modal>
+      {/* </Grid> */}
     </div>
   );
 };

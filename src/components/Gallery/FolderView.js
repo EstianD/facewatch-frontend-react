@@ -1,5 +1,5 @@
 import React from "react";
-import { motion, useCycle } from "framer-motion";
+import { motion } from "framer-motion";
 
 function FolderView({ galleryData, handleFolderSelect }) {
   return (
