@@ -202,12 +202,12 @@ const AddProfileModal = ({
 
   return (
     <div>
-      <div className="add-profile-grid">
-        {/* <div className="add-profile-col"></div> */}
-        <div className="add-profile-col" onClick={handleOpen}>
-          <img src="images/add-profile-icon-med.png" />
-        </div>
+      {/* <div className="add-profile-grid"> */}
+      {/* <div className="add-profile-col"></div> */}
+      <div className="add-col" onClick={handleOpen}>
+        <img src="images/add-profile-icon-med.png" />
       </div>
+      {/* </div> */}
       <h3>Profiles</h3>
       <Modal
         open={open}

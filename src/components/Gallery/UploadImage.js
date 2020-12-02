@@ -68,40 +68,39 @@ function UploadImage({ getGalleryData }) {
 
   return (
     <div>
-      <div className="add-image-grid">
-        <form>
-          <input
-            accept="image/*"
-            id="imageAdd"
-            type="file"
-            className="img-add--input"
-            multiple
-            onChange={handleUploadImages}
-          />
-          <div className="add-image-col">
-            <label htmlFor="imageAdd">
-              {/* <Button
+      {/* <div className="add-image-grid"> */}
+      <form>
+        <input
+          accept="image/*"
+          id="imageAdd"
+          type="file"
+          className="img-add--input"
+          multiple
+          onChange={handleUploadImages}
+        />
+        <div className="add-col">
+          <label htmlFor="imageAdd">
+            {/* <Button
               color="primary"
               aria-label="add-image"
               className="img-add--button"
               component="span"
             > */}
-              {/* <AddIcon fontSize="large" /> */}
+            {/* <AddIcon fontSize="large" /> */}
 
-              <div className="add-image">
-                <img src="images/add-image.png" />
-              </div>
-              {/* </Button> */}
-            </label>
-          </div>
-          <div className="upload-message">
-            {error && <div className="error">{error}</div>}
-            {files && <div>{uploaded}</div>}
-          </div>
-        </form>
-      </div>
-      <h3>Gallery</h3>
+            {/* <div className="add-image"> */}
+            <img src="images/add-image-icon.png" />
+            {/* </div> */}
+            {/* </Button> */}
+          </label>
+        </div>
+        <div className="upload-message">
+          {error && <div className="error">{error}</div>}
+          {files && <div>{uploaded}</div>}
+        </div>
+      </form>
     </div>
+    // </div>
   );
 }
 

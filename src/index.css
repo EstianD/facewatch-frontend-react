@@ -21,8 +21,8 @@ code {
 .img-grid {
   margin: 20px auto;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 40px;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-gap: 20px;
 }
 
 .folder-grid {
@@ -53,36 +53,42 @@ code {
   padding: 0 4px;
 }
 
-.add-profile-col {
+.add-grid {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 4px;
+}
+
+/* .add-profile-col {
   flex: 25%;
   max-width: 10%;
   padding: 0 4px;
-}
+} */
 
-.add-profile-col img {
+/* .add-profile-col img {
   margin-top: 8px;
   vertical-align: middle;
   width: 90%;
-}
+} */
 
-.add-image-col {
+/* .add-image-col {
   flex: 25%;
   max-width: 100%;
   padding: 0 4px;
-}
+} */
 
-.add-image-col img {
+/* .add-image-col img {
   margin-top: 8px;
   vertical-align: middle;
   width: 100%;
-}
+} */
 
 .img-wrap {
   overflow: hidden;
   height: 0;
   padding: 50% 0;
   position: relative;
-  opacity: 0.8;
+  opacity: 1;
 }
 
 .img-wrap img {
@@ -220,20 +226,20 @@ code {
 
 /* Screen size for add-profile column */
 @media screen and (max-width: 800px) {
-  .add-profile-col {
+  .add-col {
     flex: 50%;
     max-width: 15%;
   }
 }
 
 @media screen and (max-width: 600px) {
-  .add-profile-col {
+  .add-col {
     flex: 50%;
     max-width: 15%;
   }
 }
 
-/* Screen size for add-image column */
+/* Screen size for add-image column
 @media screen and (max-width: 800px) {
   .add-image-col {
     flex: 50%;
@@ -246,4 +252,4 @@ code {
     flex: 50%;
     max-width: 50%;
   }
-}
+} */

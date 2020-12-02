@@ -33,7 +33,7 @@ const Dashboard = ({ user, handleLogout }) => {
 
   // Folders
   const [view, setView] = useState("folder");
-  const [selectedFolder, setSelectedFolder] = useState({});
+  // const [selectedFolder, setSelectedFolder] = useState({});
   const [selectedFolderId, setSelectedFolderId] = useState(null);
 
   // Images
@@ -93,15 +93,11 @@ const Dashboard = ({ user, handleLogout }) => {
 
   // Get profiles
   useEffect(() => {
-    console.log("GET PROFILE EFFECT");
-
     getProfileData();
   }, []);
 
   // Get gallery images
   useEffect(() => {
-    console.log("GET GALLERY EFFECT");
-
     getGalleryData();
   }, [profiles]);
 
@@ -138,7 +134,7 @@ const Dashboard = ({ user, handleLogout }) => {
     // console.log(galleryData[id]);
     setView("gallery");
     setSelectedFolderId(id);
-    setSelectedFolder(galleryData[id]);
+    // setSelectedFolder(galleryData[id]);
   };
 
   return (
@@ -147,14 +143,17 @@ const Dashboard = ({ user, handleLogout }) => {
       {/* <Container maxWidth="md"> */}
       <div className="dashboard-container">
         <Header handleLogout={handleLogout} />
-        <AddProfileModal
-          setProfiles={setProfiles}
-          profiles={profiles}
-          getProfileData={getProfileData}
-          profileLoading={profileLoading}
-        />
+        <div className="add-grid">
+          <AddProfileModal
+            setProfiles={setProfiles}
+            profiles={profiles}
+            getProfileData={getProfileData}
+            profileLoading={profileLoading}
+          />
+          <UploadImage getGalleryData={getGalleryData} />
+        </div>
+
         <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
-        <UploadImage getGalleryData={getGalleryData} />
 
         {view == "folder" && (
           <FolderView
@@ -165,8 +164,9 @@ const Dashboard = ({ user, handleLogout }) => {
         {view == "gallery" && (
           <Gallery
             galleryData={galleryData}
-            selectedFolder={selectedFolder}
+            // selectedFolder={selectedFolder}
             setSelectedImg={setSelectedImg}
+            selectedFolderId={selectedFolderId}
           />
         )}
         {selectedImg && (
