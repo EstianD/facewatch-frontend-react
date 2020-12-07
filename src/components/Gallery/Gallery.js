@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { motion } from "framer-motion";
+import { confirmAlert } from "react-confirm-alert"; // Import
+import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
 import Paper from "@material-ui/core/Paper";
 import Grid from "@material-ui/core/Grid";
@@ -8,7 +10,13 @@ import Divider from "@material-ui/core/Divider";
 import { v4 as uuidv4 } from "uuid";
 import GalleryImage from "./GalleryImage";
 
-const Gallery = ({ galleryData, setSelectedImg, selectedFolderId }) => {
+const Gallery = ({
+  galleryData,
+  setSelectedImg,
+  selectedFolderId,
+  handleFolderView,
+  handleImageDelete,
+}) => {
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [noImages, setNoImages] = useState("");
 
@@ -21,8 +29,38 @@ const Gallery = ({ galleryData, setSelectedImg, selectedFolderId }) => {
     }
   }, [galleryData]);
 
+  const handleImageAction = (e, image) => {
+    console.log(e.target.className);
+    console.log(image);
+    // Check the action clicked on image
+    if (e.target.className == "img-wrap") {
+      setSelectedImg(image);
+    } else if (e.target.className == "image-delete") {
+      // Delete image modal
+      confirmImageDelete(image);
+    }
+  };
+
+  // Delete image modal
+  const confirmImageDelete = (image) => {
+    confirmAlert({
+      title: "Delete Image",
+      message: "Are you sure you want to delete this image?",
+      buttons: [
+        {
+          label: "Yes",
+          onClick: () => handleImageDelete(image),
+        },
+        {
+          label: "Cancel",
+        },
+      ],
+    });
+  };
+
   return (
     <div>
+      <button onClick={() => handleFolderView()}>Back</button>
       <h3>Gallery</h3>
       <div className="img-grid">
         {galleryData &&
@@ -32,8 +70,16 @@ const Gallery = ({ galleryData, setSelectedImg, selectedFolderId }) => {
               layout
               className="img-wrap"
               key={idx}
-              onClick={() => setSelectedImg(image)}
+              onClick={(e) => handleImageAction(e, image)}
             >
+              <div className="image-actions">
+                <div
+                  className="image-delete"
+                  // onClick={(e) => confirmDelete(profile["id"])}
+                >
+                  &#10060;
+                </div>
+              </div>
               <img src={image} alt="some image" />
             </motion.div>
           ))}

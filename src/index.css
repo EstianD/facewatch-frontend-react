@@ -98,6 +98,7 @@ code {
   position: absolute;
   top: 0;
   left: 0;
+  z-index: -1;
 }
 
 .profile-card {
@@ -158,6 +159,35 @@ code {
   text-align: center;
 }
 
+.image-actions {
+  transition: 0.3s ease;
+  opacity: 1;
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  font-size: 100%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+}
+
+.image-delete:hover {
+  transition: 0.3s ease;
+  font-size: 150%;
+  cursor: pointer;
+  /* transform: translate(-50%, -50%); */
+  /* -ms-transform: translate(-50%, -50%); */
+}
+
+.image-actions {
+  opacity: 0;
+}
+
+.img-wrap:hover .image-actions {
+  opacity: 1;
+}
+
 /* Profile component */
 
 .profile-form-input {
@@ -204,6 +234,19 @@ code {
   height: 100%;
   width: 100%;
 }
+
+/* Notification */
+.upload-notification {
+  padding: 20px;
+  background-color: #4caf50; /* Red */
+  color: white;
+  margin: auto;
+  text-align: center;
+}
+
+/* .add-col {
+  margin: 0;
+} */
 
 /* Modal styles */
 .backdrop {

@@ -10,7 +10,7 @@ import AuthContext from "../hooks/AuthContext";
 
 // Components
 import Header from "./Header/Header";
-import Profiles from "./Profiles/Profiles";
+// import Profiles from "./Profiles/Profiles";
 import AddProfileModal from "../components/Profiles/AddProfileModal";
 // import Main from "./Gallery/Main";
 import UploadImage from "./Gallery/UploadImage";
@@ -21,6 +21,7 @@ import Gallery from "./Gallery/Gallery";
 import ImageModal from "./Gallery/ImageModal";
 import FolderView from "./Gallery/FolderView";
 import ProfileList from "./Profiles/ProfileList";
+import UploadNotification from "././Header/UploadNotification";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -107,7 +108,7 @@ const Dashboard = ({ user, handleLogout }) => {
 
     axios
       .post(
-        `${REACT_APP_NODE_URL}/profiles/delete`,
+        `${REACT_APP_NODE_URL}/profiles/deleteProfile`,
         {
           id: id,
         },
@@ -128,6 +129,32 @@ const Dashboard = ({ user, handleLogout }) => {
       });
   };
 
+  // Handle image delete from gallery
+  const handleImageDelete = async (image) => {
+    console.log("DELETING IMAGE");
+    console.log(image);
+    console.log(jwt);
+    // console.log(jwt);
+    axios
+      .post(
+        `${REACT_APP_NODE_URL}/profiles/deleteImage`,
+        {
+          image,
+        },
+        {
+          headers: {
+            "Content-Type": `application/json`,
+            "auth-token": jwt,
+          },
+        }
+      )
+      .then((res) => {
+        console.log(res);
+      });
+  };
+
+  // handleImageDelete();
+
   // Function for view change
   const handleFolderSelect = (id) => {
     // console.log(id);
@@ -135,6 +162,11 @@ const Dashboard = ({ user, handleLogout }) => {
     setView("gallery");
     setSelectedFolderId(id);
     // setSelectedFolder(galleryData[id]);
+  };
+
+  const handleFolderView = () => {
+    setView("folder");
+    setSelectedFolderId(null);
   };
 
   return (
@@ -151,6 +183,7 @@ const Dashboard = ({ user, handleLogout }) => {
             profileLoading={profileLoading}
           />
           <UploadImage getGalleryData={getGalleryData} />
+          <UploadNotification />
         </div>
 
         <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
@@ -167,6 +200,8 @@ const Dashboard = ({ user, handleLogout }) => {
             // selectedFolder={selectedFolder}
             setSelectedImg={setSelectedImg}
             selectedFolderId={selectedFolderId}
+            handleFolderView={handleFolderView}
+            handleImageDelete={handleImageDelete}
           />
         )}
         {selectedImg && (
