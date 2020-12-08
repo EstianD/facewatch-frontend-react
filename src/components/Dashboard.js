@@ -21,7 +21,9 @@ import Gallery from "./Gallery/Gallery";
 import ImageModal from "./Gallery/ImageModal";
 import FolderView from "./Gallery/FolderView";
 import ProfileList from "./Profiles/ProfileList";
-import UploadNotification from "././Header/UploadNotification";
+import UploadNotification from "./Header/UploadNotification";
+import ErrorNotification from "./Header/ErrorNotification";
+import Loader from "./Header/Loader";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -31,6 +33,11 @@ const Dashboard = ({ user, handleLogout }) => {
   const [galleryData, setGalleryData] = useState([]);
   const [profileLoading, setProfileLoading] = useState(false);
   const [galleryLoading, setGalleryLoading] = useState(false);
+
+  // Upload notification
+  const [uploadNotification, setUploadNotification] = useState(null);
+  // Error notification
+  const [errorNotification, setErrorNotification] = useState(null);
 
   // Folders
   const [view, setView] = useState("folder");
@@ -125,7 +132,14 @@ const Dashboard = ({ user, handleLogout }) => {
           (profile) => profile["id"] !== id
         );
         setProfiles(newProfilesArr);
+        setUploadNotification("Profile successfully deleted!");
         setProfileLoading(false);
+        setTimeout(() => {
+          setUploadNotification(null);
+        }, 3000);
+      })
+      .catch((err) => {
+        setErrorNotification("Something went wrong, please try again shortly!");
       });
   };
 
@@ -181,11 +195,29 @@ const Dashboard = ({ user, handleLogout }) => {
             profiles={profiles}
             getProfileData={getProfileData}
             profileLoading={profileLoading}
+            setUploadNotification={setUploadNotification}
           />
-          <UploadImage getGalleryData={getGalleryData} />
-          <UploadNotification />
+          <UploadImage
+            getGalleryData={getGalleryData}
+            setUploadNotification={setUploadNotification}
+          />
+          {uploadNotification && (
+            <UploadNotification uploadNotification={uploadNotification} />
+          )}
+          {errorNotification && (
+            <ErrorNotification errorNotification={errorNotification} />
+          )}
         </div>
+        {/* Profile head */}
 
+        <div className="profile-title-grid">
+          <div>
+            <h3>Profiles</h3>
+          </div>
+          <div>
+            <Loader />
+          </div>
+        </div>
         <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
 
         {view == "folder" && (

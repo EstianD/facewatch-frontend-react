@@ -1,10 +1,10 @@
 import React from "react";
 
-const UploadNotification = () => {
+const UploadNotification = ({ uploadNotification }) => {
   return (
     <div>
       <div className="add-col">
-        <div class="upload-notification">This is an alert box.</div>
+        <div class="upload-notification">{uploadNotification}</div>
       </div>
     </div>
   );

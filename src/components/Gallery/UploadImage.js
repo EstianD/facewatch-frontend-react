@@ -4,7 +4,7 @@ import axios from "axios";
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
 
-function UploadImage({ getGalleryData }) {
+function UploadImage({ getGalleryData, setUploadNotification }) {
   const [files, setFiles] = useState(null);
   const [error, setError] = useState(null);
   const [uploaded, setUploaded] = useState(null);
@@ -53,13 +53,13 @@ function UploadImage({ getGalleryData }) {
             if (res.data.status === 200) {
               // Set state for gallery update
               //   setUploaded((state) => state + 1);
-
+              setUploadNotification("Files uploaded successfully");
               setTimeout(() => {
                 getGalleryData();
-                setUploaded("Files uploaded successfully");
+                setUploadNotification(null);
                 // setUploadPerc(0);
                 //  setUploading(false);
-              }, 2000);
+              }, 3000);
             }
           });
       } catch (err) {}

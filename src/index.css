@@ -59,29 +59,25 @@ code {
   padding: 0 4px;
 }
 
-/* .add-profile-col {
-  flex: 25%;
-  max-width: 10%;
+.profile-title-grid {
+  display: flex;
+  flex-wrap: nowrap;
   padding: 0 4px;
+  justify-content: flex-start;
+}
+
+.head-loader {
+  flex-shrink: 3;
+  margin-top: 25%;
+}
+
+/* .profile-title-grid > div {
+  overflow: hidden;
+  height: 0;
+  position: relative;
 } */
 
-/* .add-profile-col img {
-  margin-top: 8px;
-  vertical-align: middle;
-  width: 90%;
-} */
-
-/* .add-image-col {
-  flex: 25%;
-  max-width: 100%;
-  padding: 0 4px;
-} */
-
-/* .add-image-col img {
-  margin-top: 8px;
-  vertical-align: middle;
-  width: 100%;
-} */
+/* Gallery section */
 
 .img-wrap {
   overflow: hidden;
@@ -101,6 +97,39 @@ code {
   z-index: -1;
 }
 
+.image-actions {
+  transition: 0.3s ease;
+  opacity: 1;
+  position: absolute;
+  top: 10%;
+  left: 90%;
+  font-size: 100%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
+  z-index: 1;
+}
+
+.image-delete:hover {
+  transition: 0.3s ease;
+  font-size: 150%;
+  cursor: pointer;
+}
+
+.img-wrap:hover {
+  cursor: pointer;
+}
+
+.image-actions {
+  opacity: 0;
+}
+
+.img-wrap:hover .image-actions {
+  opacity: 1;
+}
+
+/* Profile section */
+
 .profile-card {
   min-width: 100%;
   min-height: 100%;
@@ -108,10 +137,10 @@ code {
   position: relative;
   top: 0;
   left: 0;
-  /* width: 300px;
-  height: 300px; */
-  /* margin: 0 auto; */
-  /* border-radius: 4px; */
+}
+
+.profile-form-input {
+  display: none;
 }
 
 .profile-card:hover img {
@@ -130,8 +159,6 @@ code {
 .profile-delete:hover {
   transition: 0.5s ease;
   font-size: 150%;
-  /* transform: translate(-50%, -50%); */
-  /* -ms-transform: translate(-50%, -50%); */
 }
 
 .profile-img img {
@@ -147,6 +174,12 @@ code {
   position: relative;
 }
 
+/* .title-profile-grid > div {
+  width: 50%;
+  margin: 10px;
+  text-align: center;
+} */
+
 .profile-actions {
   transition: 0.5s ease;
   opacity: 0;
@@ -159,57 +192,7 @@ code {
   text-align: center;
 }
 
-.image-actions {
-  transition: 0.3s ease;
-  opacity: 1;
-  position: absolute;
-  top: 10%;
-  left: 90%;
-  font-size: 100%;
-  transform: translate(-50%, -50%);
-  -ms-transform: translate(-50%, -50%);
-  text-align: center;
-  z-index: 1;
-}
-
-.image-delete:hover {
-  transition: 0.3s ease;
-  font-size: 150%;
-  cursor: pointer;
-  /* transform: translate(-50%, -50%); */
-  /* -ms-transform: translate(-50%, -50%); */
-}
-
-.image-actions {
-  opacity: 0;
-}
-
-.img-wrap:hover .image-actions {
-  opacity: 1;
-}
-
-/* Profile component */
-
-.profile-form-input {
-  display: none;
-}
-
-/* Folder View styles */
-/* .folder-wrap {
-  overflow: hidden;
-  height: 0;
-  padding: 50% 0;
-  position: relative;
-}
-
-.folder-wrap img {
-  min-width: 100%;
-  min-height: 100%;
-  max-width: 100%;
-  position: absolute;
-  top: 0;
-  left: 0;
-} */
+/* Folder section */
 
 .folder-wrap img {
   margin: 0;
@@ -220,12 +203,20 @@ code {
   text-align: center;
 }
 
-/* .folder-wrap img:hover {
-  transform: scale(1.1);
-  transition: transform 0.5s ease;
-} */
+/* Folder head */
+.folder-title-grid {
+  display: flex;
+  flex-wrap: nowrap;
+  padding: 0 4px;
+  justify-content: flex-start;
+}
 
-/* Image input styles */
+.head-loader {
+  flex-shrink: 3;
+  margin-top: 25%;
+}
+
+/* Add content section */
 .img-add--input {
   display: none;
 }
@@ -237,16 +228,19 @@ code {
 
 /* Notification */
 .upload-notification {
-  padding: 20px;
+  padding: 10px;
   background-color: #4caf50; /* Red */
   color: white;
-  margin: auto;
-  text-align: center;
+  margin-top: 10px;
+  /* text-align: center; */
 }
 
-/* .add-col {
-  margin: 0;
-} */
+.error-notification {
+  padding: 10px;
+  background-color: #f44336; /* Red */
+  color: white;
+  margin-top: 10px;
+}
 
 /* Modal styles */
 .backdrop {
@@ -271,14 +265,14 @@ code {
 @media screen and (max-width: 800px) {
   .add-col {
     flex: 50%;
-    max-width: 15%;
+    max-width: 100%;
   }
 }
 
 @media screen and (max-width: 600px) {
   .add-col {
     flex: 50%;
-    max-width: 15%;
+    max-width: 100%;
   }
 }
 

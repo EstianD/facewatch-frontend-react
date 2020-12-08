@@ -1,10 +1,19 @@
 import React from "react";
 import { motion } from "framer-motion";
+import Loader from "../Header/Loader";
 
 function FolderView({ galleryData, handleFolderSelect }) {
   return (
     <div>
-      <h3>Folders</h3>
+      <div className="folder-title-grid">
+        <div>
+          <h3>Folders</h3>
+        </div>
+        <div>
+          <Loader />
+        </div>
+      </div>
+
       <div className="folder-grid">
         {galleryData.map((profile, idx) => {
           return (

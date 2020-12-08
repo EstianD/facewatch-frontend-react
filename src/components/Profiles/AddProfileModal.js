@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import ProfileMsg from "./ProfileMsg";
 import AddProfileProgressBar from "./AddProfileProgressBar";
 import ErrorMsg from "./ErrorMsg";
+import Loader from "../Header/Loader";
 
 import axios from "axios";
 
@@ -45,6 +46,7 @@ const AddProfileModal = ({
   profiles,
   getProfileData,
   profileLoading,
+  setUploadNotification,
 }) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -101,16 +103,18 @@ const AddProfileModal = ({
           })
           .then((res) => {
             if (res.data.status === 200) {
-              setMessage("File uploaded succesfully!");
+              setUploadNotification("Profile uploaded succesfully!");
               setFile(null);
+              setOpen(false);
               setprofileuser("");
               // re-render all profiles
               getProfileData();
               // setUploadPerc(100);
               setTimeout(() => {
                 // setUploadPerc(0);
+                setUploadNotification(null);
                 setUploading(false);
-              }, 1000);
+              }, 3000);
             } else if (res.data.status === 401) {
               setprofileuser("");
               setMessage(res.data.msg);
@@ -208,7 +212,15 @@ const AddProfileModal = ({
         <img src="images/add-profile-icon-med.png" />
       </div>
       {/* </div> */}
-      <h3>Profiles</h3>
+      {/* <div className="profile-title-grid">
+        <div>
+          <h3>Profiles</h3>
+        </div>
+        <div>
+          <Loader />
+        </div>
+      </div> */}
+
       <Modal
         open={open}
         onClose={handleClose}
