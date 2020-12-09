@@ -2,7 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import Loader from "../Header/Loader";
 
-function FolderView({ galleryData, handleFolderSelect }) {
+function FolderView({ galleryData, handleFolderSelect, galleryLoading }) {
   return (
     <div>
       <div className="folder-title-grid">
@@ -10,7 +10,7 @@ function FolderView({ galleryData, handleFolderSelect }) {
           <h3>Folders</h3>
         </div>
         <div>
-          <Loader />
+          <div>{galleryLoading && <Loader />}</div>
         </div>
       </div>
 
@@ -23,9 +23,13 @@ function FolderView({ galleryData, handleFolderSelect }) {
               onClick={() => handleFolderSelect(idx)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 1 }}
+              // transition={{ delay: 0.5 }}
             >
-              <motion.img src="images/folder.svg" alt="some image" />
+              <motion.img
+                src="images/folder.svg"
+                alt="some image"
+                whileHover={{ scale: 1.1 }}
+              />
               <p className="folder-text">
                 {profile.profileName} ({profile.matchLength})
               </p>

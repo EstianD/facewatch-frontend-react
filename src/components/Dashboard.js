@@ -24,6 +24,7 @@ import ProfileList from "./Profiles/ProfileList";
 import UploadNotification from "./Header/UploadNotification";
 import ErrorNotification from "./Header/ErrorNotification";
 import Loader from "./Header/Loader";
+import UploadLoader from "./Header/UploadLoader";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -148,6 +149,8 @@ const Dashboard = ({ user, handleLogout }) => {
     console.log("DELETING IMAGE");
     console.log(image);
     console.log(jwt);
+    setGalleryLoading(true);
+    // setProfileLoading(true);
     // console.log(jwt);
     axios
       .post(
@@ -164,6 +167,9 @@ const Dashboard = ({ user, handleLogout }) => {
       )
       .then((res) => {
         console.log(res);
+        getGalleryData();
+        // setGalleryLoading(false);
+        // setProfileLoading(false);
       });
   };
 
@@ -201,6 +207,7 @@ const Dashboard = ({ user, handleLogout }) => {
             getGalleryData={getGalleryData}
             setUploadNotification={setUploadNotification}
           />
+          <UploadLoader />
           {uploadNotification && (
             <UploadNotification uploadNotification={uploadNotification} />
           )}
@@ -214,9 +221,7 @@ const Dashboard = ({ user, handleLogout }) => {
           <div>
             <h3>Profiles</h3>
           </div>
-          <div>
-            <Loader />
-          </div>
+          <div>{profileLoading && <Loader />}</div>
         </div>
         <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
 
@@ -224,6 +229,7 @@ const Dashboard = ({ user, handleLogout }) => {
           <FolderView
             galleryData={galleryData}
             handleFolderSelect={handleFolderSelect}
+            galleryLoading={galleryLoading}
           />
         )}
         {view == "gallery" && (
@@ -234,6 +240,7 @@ const Dashboard = ({ user, handleLogout }) => {
             selectedFolderId={selectedFolderId}
             handleFolderView={handleFolderView}
             handleImageDelete={handleImageDelete}
+            galleryLoading={galleryLoading}
           />
         )}
         {selectedImg && (

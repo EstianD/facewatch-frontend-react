@@ -9,6 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import Divider from "@material-ui/core/Divider";
 import { v4 as uuidv4 } from "uuid";
 import GalleryImage from "./GalleryImage";
+import Loader from "./../Header/Loader";
 
 const Gallery = ({
   galleryData,
@@ -16,6 +17,7 @@ const Gallery = ({
   selectedFolderId,
   handleFolderView,
   handleImageDelete,
+  galleryLoading,
 }) => {
   const [selectedFolder, setSelectedFolder] = useState(null);
   const [noImages, setNoImages] = useState("");
@@ -57,11 +59,18 @@ const Gallery = ({
       ],
     });
   };
-
+  console.log("SELECTED: ", selectedFolder);
   return (
     <div>
       <button onClick={() => handleFolderView()}>Back</button>
-      <h3>Gallery</h3>
+      <div className="gallery-title-grid">
+        <div>
+          <h3>Gallery - {selectedFolder && selectedFolder.profileName}</h3>
+        </div>
+        <div>
+          <div>{galleryLoading && <Loader />}</div>
+        </div>
+      </div>
       <div className="img-grid">
         {galleryData &&
           selectedFolder &&
@@ -71,6 +80,8 @@ const Gallery = ({
               className="img-wrap"
               key={idx}
               onClick={(e) => handleImageAction(e, image)}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
             >
               <div className="image-actions">
                 <div
