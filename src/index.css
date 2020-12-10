@@ -12,6 +12,43 @@ code {
     monospace;
 }
 
+.top-nav {
+  overflow: hidden;
+  background-color: rgb(0, 225, 255);
+  width: 100%;
+  text-align: center;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  /* border: 1px solid orange; */
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.logout-div:hover {
+  background-color: orange;
+  color: white;
+}
+
+.logout-btn {
+  /* text-align: center; */
+  /* width: 50%; */
+}
+
+.logout-div {
+  /* text-align: center; */
+  margin: auto;
+  /* right: 0px; */
+  margin-right: auto;
+  position: realative;
+  overflow: auto;
+  align-self: flex-end;
+}
+
+.user-title {
+  padding-left: 5%;
+}
+
 .dashboard-container {
   margin: 0 auto;
   padding: 0 10% 10% 10%;
@@ -36,7 +73,7 @@ code {
   margin: 10px auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-  grid-gap: 20px;
+  grid-gap: 10px;
 }
 
 .add-profile-grid {
@@ -136,11 +173,15 @@ code {
   opacity: 1;
 }
 
+.folder-grid-btn:hover {
+  cursor: pointer;
+}
+
 /* Profile section */
 
 .profile-card {
-  min-width: 100%;
-  min-height: 100%;
+  min-width: 40%;
+  min-height: 40%;
   max-width: 100%;
   position: relative;
   top: 0;
@@ -198,6 +239,14 @@ code {
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
+}
+
+.add-profile-btn:hover {
+  cursor: pointer;
+}
+
+.add-image-btn:hover {
+  cursor: pointer;
 }
 
 /* Folder section */

@@ -15,7 +15,7 @@ const Gallery = ({
   galleryData,
   setSelectedImg,
   selectedFolderId,
-  handleFolderView,
+
   handleImageDelete,
   galleryLoading,
 }) => {
@@ -27,7 +27,7 @@ const Gallery = ({
     // console.log(galleryData[selectedFolderId].matchLength);
     if (galleryData[selectedFolderId].matchLength == 0) {
       console.log("nope");
-      setNoImages("No images of this profile to be displayed!");
+      setNoImages("No images to display!");
     }
   }, [galleryData]);
 
@@ -62,7 +62,6 @@ const Gallery = ({
   console.log("SELECTED: ", selectedFolder);
   return (
     <div>
-      <button onClick={() => handleFolderView()}>Back</button>
       <div className="gallery-title-grid">
         <div>
           <h3>Gallery - {selectedFolder && selectedFolder.profileName}</h3>
@@ -94,8 +93,8 @@ const Gallery = ({
               <img src={image} alt="some image" />
             </motion.div>
           ))}
-        {noImages}
       </div>
+      {noImages}
     </div>
   );
 };

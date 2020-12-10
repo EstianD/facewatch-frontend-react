@@ -48,6 +48,9 @@ const Dashboard = ({ user, handleLogout }) => {
   // Images
   const [selectedImg, setSelectedImg] = useState(null);
 
+  // Uploading status
+  const [imageUploading, setImageUploading] = useState(false);
+
   console.log("DASHBOARD");
   // FUNCTIONS FOR PROFILE AND GALLERY HOOKS
   // Define function to retrieve data for profiles
@@ -206,8 +209,9 @@ const Dashboard = ({ user, handleLogout }) => {
           <UploadImage
             getGalleryData={getGalleryData}
             setUploadNotification={setUploadNotification}
+            setImageUploading={setImageUploading}
           />
-          <UploadLoader />
+          {imageUploading && <UploadLoader />}
           {uploadNotification && (
             <UploadNotification uploadNotification={uploadNotification} />
           )}
@@ -224,7 +228,14 @@ const Dashboard = ({ user, handleLogout }) => {
           <div>{profileLoading && <Loader />}</div>
         </div>
         <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
-
+        {view == "gallery" && (
+          <motion.img
+            src="images/folder-grid/folder-grid.png"
+            className="folder-grid-btn"
+            onClick={() => handleFolderView()}
+            whileHover={{ scale: 1.1 }}
+          />
+        )}
         {view == "folder" && (
           <FolderView
             galleryData={galleryData}

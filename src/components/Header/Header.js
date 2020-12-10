@@ -30,18 +30,28 @@ const Header = ({ handleLogout }) => {
   const open = Boolean(anchorEl);
 
   return (
-    <div className={classes.root}>
-      <AppBar position="static" style={{ margin: 0 }}>
-        <Toolbar>
-          <Typography variant="h6" className={classes.title}>
-            {user.username}
-          </Typography>
+    // <div className={classes.root}>
+    //   <AppBar position="static" style={{ margin: 0 }}>
+    //     <Toolbar>
+    //       <Typography variant="h6" className={classes.title}>
+    //         {user.username}
+    //       </Typography>
 
-          <div>
-            <Logout handleLogout={handleLogout} />
-          </div>
-        </Toolbar>
-      </AppBar>
+    //       <div>
+    //         <Logout handleLogout={handleLogout} />
+    //       </div>
+    //     </Toolbar>
+    //   </AppBar>
+    // </div>
+    <div className="top-nav">
+      <div className="user-title">
+        <h3>
+          {user.username.charAt(0).toUpperCase() + user.username.slice(1)}
+        </h3>
+      </div>
+      <div className="logout-div">
+        <Logout handleLogout={handleLogout} />
+      </div>
     </div>
   );
 };

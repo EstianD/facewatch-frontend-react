@@ -3,8 +3,13 @@ import axios from "axios";
 
 import AddIcon from "@material-ui/icons/Add";
 import Button from "@material-ui/core/Button";
+import { motion } from "framer-motion";
 
-function UploadImage({ getGalleryData, setUploadNotification }) {
+function UploadImage({
+  getGalleryData,
+  setUploadNotification,
+  setImageUploading,
+}) {
   const [files, setFiles] = useState(null);
   const [error, setError] = useState(null);
   const [uploaded, setUploaded] = useState(null);
@@ -40,7 +45,7 @@ function UploadImage({ getGalleryData, setUploadNotification }) {
       // setUploaded("Files uploaded successfully");
       // Upload File
       try {
-        //   setUploading(true);
+        setImageUploading(true);
         await axios
           .post(`${REACT_APP_NODE_URL}/file-upload/gallery`, formData, {
             headers: {
@@ -51,6 +56,7 @@ function UploadImage({ getGalleryData, setUploadNotification }) {
           .then((res) => {
             // Check for successful response
             if (res.data.status === 200) {
+              setImageUploading(false);
               // Set state for gallery update
               //   setUploaded((state) => state + 1);
               setUploadNotification("Files uploaded successfully");
@@ -62,7 +68,10 @@ function UploadImage({ getGalleryData, setUploadNotification }) {
               }, 3000);
             }
           });
-      } catch (err) {}
+      } catch (err) {
+        console.log(err);
+        setImageUploading(false);
+      }
     }
   };
 
@@ -89,11 +98,16 @@ function UploadImage({ getGalleryData, setUploadNotification }) {
             {/* <AddIcon fontSize="large" /> */}
 
             {/* <div className="add-image"> */}
-            <img src="images/add-image-icon.png" />
+            <motion.img
+              className="add-image-btn"
+              src="images/add-image-icon.png"
+              whileHover={{ scale: 1.1 }}
+            />
             {/* </div> */}
             {/* </Button> */}
           </label>
         </div>
+
         <div className="upload-message">
           {error && <div className="error">{error}</div>}
           {files && <div>{uploaded}</div>}

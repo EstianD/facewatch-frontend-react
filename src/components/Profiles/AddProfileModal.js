@@ -4,6 +4,7 @@ import Modal from "@material-ui/core/Modal";
 import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
+import { motion } from "framer-motion";
 
 import ProfileMsg from "./ProfileMsg";
 import AddProfileProgressBar from "./AddProfileProgressBar";
@@ -209,7 +210,11 @@ const AddProfileModal = ({
       {/* <div className="add-profile-grid"> */}
       {/* <div className="add-profile-col"></div> */}
       <div className="add-col" onClick={handleOpen}>
-        <img src="images/add-profile-icon-med.png" />
+        <motion.img
+          className="add-profile-btn"
+          src="images/add-profile-icon-med.png"
+          whileHover={{ scale: 1.1 }}
+        />
       </div>
       {/* </div> */}
       {/* <div className="profile-title-grid">
