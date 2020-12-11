@@ -14,39 +14,73 @@ code {
 
 .top-nav {
   overflow: hidden;
-  background-color: rgb(0, 225, 255);
+  background-color: #1697e0;
   width: 100%;
-  text-align: center;
-  margin: auto;
+  height: 50px;
+  /* text-align: center; */
+  /* margin: auto; */
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  /* flex-wrap: wrap; */
+  /* justify-content: space-between; */
   /* border: 1px solid orange; */
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  align-items: baseline;
+}
+
+.logout-div:hover .logout-btn {
+  color: white;
 }
 
 .logout-div:hover {
-  background-color: orange;
-  color: white;
+  background-color: #ffca28;
+}
+
+.app-title {
+  color: #ffca28;
+  /* width: 200%;
+  height: 200%; */
 }
 
 .logout-btn {
   /* text-align: center; */
   /* width: 50%; */
+  font-family: bold;
+  padding-right: 30px;
+  padding-left: 30px;
+  vertical-align: middle;
+  height: 100%;
+  /* margin-bottom: 0; */
+  margin-top: 15%;
+  justify-content: center;
+  color: #ffca28;
 }
 
 .logout-div {
   /* text-align: center; */
-  margin: auto;
+  margin-left: auto;
+  margin-top: 0;
+  /* margin-right: 20px; */
+  /* background-color: orange; */
+
+  cursor: pointer;
+  /* padding: 0 35px 0 35px; */
+  height: 100%;
+  align-items: center;
+
   /* right: 0px; */
-  margin-right: auto;
-  position: realative;
-  overflow: auto;
+  /* margin-right: auto; */
+  /* position: realative; */
+  /* overflow: auto; */
   align-self: flex-end;
 }
 
 .user-title {
-  padding-left: 5%;
+  margin-right: auto;
+  padding-left: 35px;
+  padding-right: 35px;
+  background-color: #ffca28;
+  color: white;
+  /* padding-left: 5%; */
 }
 
 .dashboard-container {
@@ -192,6 +226,11 @@ code {
   display: none;
 }
 
+.uploading-image-title {
+  padding-bottom: 10px;
+  color: rgb(167, 157, 157);
+}
+
 .profile-card:hover img {
   opacity: 0.3;
 }
@@ -271,18 +310,6 @@ code {
 .head-loader {
   flex-shrink: 3;
   margin-top: 25%;
-}
-
-/* Upload loader */
-.upload-loader {
-  border: 8px solid #f3f3f3; /* Light grey */
-  border-top: 8px solid #3498db; /* Blue */
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
-  animation: spin 1.5s linear infinite;
-  margin-top: 25%;
-  margin-left: 25%;
 }
 
 @keyframes spin {

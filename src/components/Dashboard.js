@@ -50,6 +50,7 @@ const Dashboard = ({ user, handleLogout }) => {
 
   // Uploading status
   const [imageUploading, setImageUploading] = useState(false);
+  const [profileUploading, setProfileUploading] = useState(false);
 
   console.log("DASHBOARD");
   // FUNCTIONS FOR PROFILE AND GALLERY HOOKS
@@ -205,13 +206,15 @@ const Dashboard = ({ user, handleLogout }) => {
             getProfileData={getProfileData}
             profileLoading={profileLoading}
             setUploadNotification={setUploadNotification}
+            setProfileUploading={setProfileUploading}
           />
           <UploadImage
             getGalleryData={getGalleryData}
             setUploadNotification={setUploadNotification}
             setImageUploading={setImageUploading}
           />
-          {imageUploading && <UploadLoader />}
+          {imageUploading && <UploadLoader componentLoading="gallery" />}
+          {profileUploading && <UploadLoader componentLoading="profile" />}
           {uploadNotification && (
             <UploadNotification uploadNotification={uploadNotification} />
           )}

@@ -48,6 +48,7 @@ const AddProfileModal = ({
   getProfileData,
   profileLoading,
   setUploadNotification,
+  setProfileUploading,
 }) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -58,14 +59,15 @@ const AddProfileModal = ({
   const [message, setMessage] = useState("");
   const [error, setError] = useState(null);
   // const [uploadPerc, setUploadPerc] = useState(0);
-  const [uploading, setUploading] = useState(false);
+  // const [uploading, setUploading] = useState(false);
   const { REACT_APP_NODE_URL } = process.env;
 
   // Accepted file types
   const types = ["image/png", "image/jpeg"];
 
-  const getImage = (e) => {
+  const getProfileImage = (e) => {
     const file = e.target.files[0];
+    console.log("FILE: ", file);
     console.log(file);
     if (file && types.includes(file.type)) {
       // const file = files[0];
@@ -94,7 +96,9 @@ const AddProfileModal = ({
     // Check if file is selected with profile
     if (file && profileuser && !error) {
       try {
-        setUploading(true);
+        setProfileUploading(true);
+        setOpen(false);
+        // setProfileUploading(true);
         await axios
           .post(`${REACT_APP_NODE_URL}/file-upload/profile`, formData, {
             headers: {
@@ -106,7 +110,7 @@ const AddProfileModal = ({
             if (res.data.status === 200) {
               setUploadNotification("Profile uploaded succesfully!");
               setFile(null);
-              setOpen(false);
+              setProfileUploading(false);
               setprofileuser("");
               // re-render all profiles
               getProfileData();
@@ -114,12 +118,11 @@ const AddProfileModal = ({
               setTimeout(() => {
                 // setUploadPerc(0);
                 setUploadNotification(null);
-                setUploading(false);
               }, 3000);
             } else if (res.data.status === 401) {
               setprofileuser("");
               setMessage(res.data.msg);
-              setUploading(false);
+              // setUploading(false);
             } else {
               setMessage(
                 "There was a error on our side, Please try again later."
@@ -176,8 +179,12 @@ const AddProfileModal = ({
           className={classes.input}
           id="contained-button-file"
           type="file"
-          onChange={getImage}
+          onChange={getProfileImage}
         />
+        {file && <div className="uploading-image-title">{file.name}</div>}
+        {!file && (
+          <div className="uploading-image-title">No file selected!</div>
+        )}
         <label htmlFor="contained-button-file">
           <Button variant="contained" color="primary" component="span">
             Upload
@@ -197,11 +204,11 @@ const AddProfileModal = ({
           Add
         </Button>
       </form>
-      {uploading && (
+      {/* {uploading && (
         <>
           <AddProfileProgressBar />
         </>
-      )}
+      )} */}
     </div>
   );
 

@@ -3,10 +3,8 @@ import Button from "@material-ui/core/Button";
 
 const logout = ({ handleLogout }) => {
   return (
-    <div>
-      <a className="logout-btn" onClick={handleLogout}>
-        Logout
-      </a>
+    <div className="logout-btn">
+      <h3 onClick={handleLogout}>Logout</h3>
     </div>
   );
 };
