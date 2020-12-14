@@ -15,7 +15,6 @@ const Gallery = ({
   galleryData,
   setSelectedImg,
   selectedFolderId,
-
   handleImageDelete,
   galleryLoading,
 }) => {
@@ -35,7 +34,7 @@ const Gallery = ({
     console.log(e.target.className);
     console.log(image);
     // Check the action clicked on image
-    if (e.target.className == "img-wrap") {
+    if (e.target.className == "gallery-img") {
       setSelectedImg(image);
     } else if (e.target.className == "image-delete") {
       // Delete image modal
@@ -70,7 +69,7 @@ const Gallery = ({
           <div>{galleryLoading && <Loader />}</div>
         </div>
       </div>
-      <div className="img-grid">
+      {/* <div className="img-grid">
         {galleryData &&
           selectedFolder &&
           selectedFolder.matches.map((image, idx) => (
@@ -93,9 +92,38 @@ const Gallery = ({
               <img src={image} alt="some image" />
             </motion.div>
           ))}
-      </div>
+      </div> */}
+      {noImages}
+      {/*  */}
+      <ul className="gallery-ul">
+        {galleryData &&
+          selectedFolder &&
+          selectedFolder.matches.map((image, idx) => (
+            <motion.li
+              className="gallery-li"
+              key={idx}
+              onClick={(e) => handleImageAction(e, image)}
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+            >
+              <div className="image-actions">
+                <div
+                  className="image-delete"
+                  // onClick={(e) => confirmDelete(profile["id"])}
+                >
+                  &#10060;
+                </div>
+              </div>
+              {/* <img src={image} alt="some image" /> */}
+              <img src={image} alt="some image" className="gallery-img" />
+            </motion.li>
+          ))}
+        <li></li>
+      </ul>
       {noImages}
     </div>
+    //
   );
 };
 

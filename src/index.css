@@ -179,10 +179,10 @@ code {
 .image-actions {
   transition: 0.3s ease;
   opacity: 1;
-  position: absolute;
-  top: 10%;
+  position: relative;
+  top: 20%;
   left: 90%;
-  font-size: 100%;
+  font-size: 150%;
   transform: translate(-50%, -50%);
   -ms-transform: translate(-50%, -50%);
   text-align: center;
@@ -191,7 +191,7 @@ code {
 
 .image-delete:hover {
   transition: 0.3s ease;
-  font-size: 150%;
+  /* font-size: 110%; */
   cursor: pointer;
 }
 
@@ -209,6 +209,55 @@ code {
 
 .folder-grid-btn:hover {
   cursor: pointer;
+}
+
+/* New gallery styles */
+.gallery-ul {
+  display: flex;
+  flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
+}
+
+.gallery-ul > li {
+  /* height: 40vh; */
+  flex-grow: 1;
+}
+
+.gallery-img {
+  max-height: 80vh;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  vertical-align: bottom;
+  border: 1px solid white;
+  /* position: relative; */
+}
+
+.gallery-li:hover .image-actions {
+  opacity: 1;
+}
+
+li:last-child {
+  flex-grow: 10;
+}
+
+@media (max-aspect-ratio: 1/1) and (max-width: 480px) {
+  .gallery-ul {
+    flex-direction: row;
+  }
+
+  .gallery-li {
+    height: auto;
+    width: 100%;
+  }
+
+  .gallery-img {
+    width: 100%;
+    max-height: 75vh;
+    min-width: 0;
+  }
 }
 
 /* Profile section */
@@ -279,6 +328,8 @@ code {
   -ms-transform: translate(-50%, -50%);
   text-align: center;
 }
+
+/* Add content section */
 
 .add-profile-btn:hover {
   cursor: pointer;

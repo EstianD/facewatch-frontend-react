@@ -153,7 +153,9 @@ const AddProfileModal = ({
 
   const body = (
     <div style={modalStyle} className={classes.paper}>
-      <h2 id="simple-modal-title">Add Profile</h2>
+      <h2 id="simple-modal-title" className="add-profile-header">
+        Add Profile
+      </h2>
 
       <p id="simple-modal-description">
         Add a profile to fillter your images by.
