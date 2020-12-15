@@ -23,7 +23,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 function Folder({ profile, idx, handleFolderSelect }) {
-  const classes = useStyles();
+  // const classes = useStyles();
   console.log("ID: ", idx);
   console.log("PROFILE: ", profile);
   return (
@@ -34,7 +34,7 @@ function Folder({ profile, idx, handleFolderSelect }) {
           height="200px"
           width="200px"
           src="images/folder.svg"
-          className={classes.folderImg}
+          // className={classes.folderImg}
         />
         <p>
           {profile.profileName} ({profile.matchLength})

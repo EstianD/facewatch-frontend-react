@@ -17,6 +17,7 @@ code {
   background-color: #1697e0;
   width: 100%;
   height: 50px;
+  min-width: 100%;
   /* text-align: center; */
   /* margin: auto; */
   display: flex;
@@ -108,6 +109,8 @@ code {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   grid-gap: 10px;
+  /* display: flex;
+  flex: wrap; */
 }
 
 .add-profile-grid {
@@ -217,22 +220,30 @@ code {
   flex-wrap: wrap;
   list-style-type: none;
   padding: 0;
+  margin: 0;
+  /* align-items: middle; */
 }
 
 .gallery-ul > li {
   /* height: 40vh; */
-  flex-grow: 1;
+  flex-grow: 0;
 }
 
 .gallery-img {
-  max-height: 80vh;
+  max-height: 40vh;
   max-width: 100%;
-  min-width: 100%;
+  width: auto;
+  height: auto;
+  /* min-width: 100%; */
   min-height: 100%;
   object-fit: cover;
   vertical-align: bottom;
   border: 1px solid white;
   /* position: relative; */
+}
+
+.gallery-img:hover {
+  cursor: pointer;
 }
 
 .gallery-li:hover .image-actions {
@@ -255,10 +266,12 @@ li:last-child {
 
   .gallery-img {
     width: 100%;
-    max-height: 75vh;
+    max-height: 40vh;
     min-width: 0;
   }
 }
+
+/*  */
 
 /* Profile section */
 
@@ -341,10 +354,9 @@ li:last-child {
 
 /* Folder section */
 
-/* .folder-wrap img {
-  margin: 0;
-  font-family: bold;
-} */
+.folder-wrap:hover {
+  cursor: pointer;
+}
 
 .folder-text {
   text-align: center;
@@ -431,18 +443,3 @@ li:last-child {
     max-width: 100%;
   }
 }
-
-/* Screen size for add-image column
-@media screen and (max-width: 800px) {
-  .add-image-col {
-    flex: 50%;
-    max-width: 50%;
-  }
-}
-
-@media screen and (max-width: 600px) {
-  .add-image-col {
-    flex: 50%;
-    max-width: 50%;
-  }
-} */

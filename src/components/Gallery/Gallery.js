@@ -15,6 +15,7 @@ const Gallery = ({
   galleryData,
   setSelectedImg,
   selectedFolderId,
+
   handleImageDelete,
   galleryLoading,
 }) => {
@@ -93,7 +94,7 @@ const Gallery = ({
             </motion.div>
           ))}
       </div> */}
-      {noImages}
+      {/* {noImages} */}
       {/*  */}
       <ul className="gallery-ul">
         {galleryData &&
@@ -103,24 +104,23 @@ const Gallery = ({
               className="gallery-li"
               key={idx}
               onClick={(e) => handleImageAction(e, image)}
-              layout
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
             >
               <div className="image-actions">
-                <div
-                  className="image-delete"
-                  // onClick={(e) => confirmDelete(profile["id"])}
-                >
-                  &#10060;
-                </div>
+                <div className="image-delete">&#10060;</div>
               </div>
-              {/* <img src={image} alt="some image" /> */}
+
               <img src={image} alt="some image" className="gallery-img" />
             </motion.li>
           ))}
         <li></li>
       </ul>
+      {/* <div className="gallery-card">
+        {galleryData &&
+          selectedFolder &&
+          selectedFolder.matches.map((image, idx) => (
+            <img src={image} alt="some image" className="gallery-img" />
+          ))}
+      </div> */}
       {noImages}
     </div>
     //

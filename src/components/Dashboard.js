@@ -151,9 +151,7 @@ const Dashboard = ({ user, handleLogout }) => {
   // Handle image delete from gallery
   const handleImageDelete = async (image) => {
     console.log("DELETING IMAGE");
-    console.log(image);
-    console.log(jwt);
-    console.log(galleryData);
+
     setGalleryLoading(true);
     // setProfileLoading(true);
     // console.log(jwt);
