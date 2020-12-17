@@ -1,6 +1,6 @@
 import React from "react";
 import { motion } from "framer-motion";
-import Loader from "../Header/Loader";
+import MainLoader from "../Header/MainLoader";
 
 function FolderView({ galleryData, handleFolderSelect, galleryLoading }) {
   return (
@@ -10,11 +10,12 @@ function FolderView({ galleryData, handleFolderSelect, galleryLoading }) {
           <h3>Folders</h3>
         </div>
         <div>
-          <div>{galleryLoading && <Loader />}</div>
+          <div>{galleryLoading && <MainLoader />}</div>
         </div>
       </div>
 
       <div className="folder-grid">
+        {/* Loop through gallery state and display profiles as folders */}
         {galleryData.map((profile, idx) => {
           return (
             <motion.div
@@ -23,12 +24,12 @@ function FolderView({ galleryData, handleFolderSelect, galleryLoading }) {
               onClick={() => handleFolderSelect(idx)}
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              // transition={{ delay: 0.5 }}
+              layout
             >
               <motion.img
                 src="images/folder.svg"
-                alt="some image"
-                whileHover={{ scale: 1.1 }}
+                alt="profile folder"
+                whileHover={{ scale: 1.05 }}
               />
               <p className="folder-text">
                 {profile.profileName} ({profile.matchLength})

@@ -1,6 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-function ErrorNotification({ errorNotification }) {
+function ErrorNotification({ errorNotification, setErrorNotification }) {
+  useEffect(() => {
+    setTimeout(() => {
+      setErrorNotification(null);
+    }, 4000);
+  }, [errorNotification]);
+
   return (
     <div>
       <div className="add-col">

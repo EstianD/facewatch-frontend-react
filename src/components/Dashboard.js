@@ -14,16 +14,16 @@ import Header from "./Header/Header";
 import AddProfileModal from "../components/Profiles/AddProfileModal";
 // import Main from "./Gallery/Main";
 import UploadImage from "./Gallery/UploadImage";
-import Folder from "./Gallery/Folder";
-import GalleryImage from "../components/Gallery/GalleryImage";
-import AddGallery from "./Gallery/AddGallery";
+// import Folder from "./Gallery/Folder";
+// import GalleryImage from "../components/Gallery/GalleryImage";
+// import AddGallery from "./Gallery/AddGallery";
 import Gallery from "./Gallery/Gallery";
 import ImageModal from "./Gallery/ImageModal";
 import FolderView from "./Gallery/FolderView";
 import ProfileList from "./Profiles/ProfileList";
 import UploadNotification from "./Header/UploadNotification";
 import ErrorNotification from "./Header/ErrorNotification";
-import Loader from "./Header/Loader";
+import MainLoader from "./Header/MainLoader";
 import UploadLoader from "./Header/UploadLoader";
 
 const Dashboard = ({ user, handleLogout }) => {
@@ -42,7 +42,6 @@ const Dashboard = ({ user, handleLogout }) => {
 
   // Folders
   const [view, setView] = useState("folder");
-  // const [selectedFolder, setSelectedFolder] = useState({});
   const [selectedFolderId, setSelectedFolderId] = useState(null);
 
   // Images
@@ -52,7 +51,6 @@ const Dashboard = ({ user, handleLogout }) => {
   const [imageUploading, setImageUploading] = useState(false);
   const [profileUploading, setProfileUploading] = useState(false);
 
-  console.log("DASHBOARD");
   // FUNCTIONS FOR PROFILE AND GALLERY HOOKS
   // Define function to retrieve data for profiles
   const getProfileData = () => {
@@ -65,13 +63,11 @@ const Dashboard = ({ user, handleLogout }) => {
         },
       })
       .then((res) => {
-        console.log("PROFILES: ", res);
+        // Set profile state
         setProfiles(res.data["profiles"]);
         setProfileLoading(false);
-        // console.log(res);
       })
       .catch((error) => {
-        console.log("ERROR: ", error);
         if (error.response.status == 400) {
           localStorage.removeItem("jwt-auth");
           handleLogout();
@@ -91,12 +87,12 @@ const Dashboard = ({ user, handleLogout }) => {
         },
       })
       .then((res) => {
-        console.log("MATCHES: ", res);
+        // Set state for the gallery
         setGalleryData(res.data);
         setGalleryLoading(false);
       })
       .catch((error) => {
-        console.log("ERROR: ", error);
+        // Redirect to login form if authentication expired
         if (error.response.status == 400) {
           localStorage.removeItem("jwt-auth");
           handleLogout();
@@ -104,16 +100,18 @@ const Dashboard = ({ user, handleLogout }) => {
       });
   };
 
-  // Get profiles
+  // Get all profiles for logged in user
   useEffect(() => {
     getProfileData();
   }, []);
 
-  // Get gallery images
+  // Get gallery images for logged in user
+  // Run everytime profile state changes
   useEffect(() => {
     getGalleryData();
   }, [profiles]);
 
+  // Handle the deletion of a profile
   const onProfileDelete = (e) => {
     const id = e;
     setProfileLoading(true);
@@ -132,7 +130,7 @@ const Dashboard = ({ user, handleLogout }) => {
         }
       )
       .then((res) => {
-        // console.log(res);
+        // Filter out the deleted profile from the state
         const newProfilesArr = profiles.filter(
           (profile) => profile["id"] !== id
         );
@@ -150,11 +148,8 @@ const Dashboard = ({ user, handleLogout }) => {
 
   // Handle image delete from gallery
   const handleImageDelete = async (image) => {
-    console.log("DELETING IMAGE");
-
     setGalleryLoading(true);
-    // setProfileLoading(true);
-    // console.log(jwt);
+
     axios
       .post(
         `${REACT_APP_NODE_URL}/profiles/deleteImage`,
@@ -169,35 +164,31 @@ const Dashboard = ({ user, handleLogout }) => {
         }
       )
       .then((res) => {
-        console.log(res);
+        // Retrieve new gallery
         getGalleryData();
-        // setGalleryLoading(false);
-        // setProfileLoading(false);
       });
   };
 
-  // handleImageDelete();
-
-  // Function for view change
+  // Functions for view change
+  // Set view to gallery when clicked on folder
   const handleFolderSelect = (id) => {
-    // console.log(id);
-    // console.log(galleryData[id]);
     setView("gallery");
     setSelectedFolderId(id);
-    // setSelectedFolder(galleryData[id]);
   };
-
+  // Set view to folder when clicked on tab icon above gallery
   const handleFolderView = () => {
     setView("folder");
     setSelectedFolderId(null);
   };
 
   return (
+    // Wrap components with the authContext
     <AuthContext.Provider value={user}>
       <CssBaseline />
-      {/* <Container maxWidth="md"> */}
       <div className="dashboard-container">
+        {/* Header section */}
         <Header handleLogout={handleLogout} />
+        {/* Add content grid */}
         <div className="add-grid">
           <AddProfileModal
             setProfiles={setProfiles}
@@ -206,30 +197,41 @@ const Dashboard = ({ user, handleLogout }) => {
             profileLoading={profileLoading}
             setUploadNotification={setUploadNotification}
             setProfileUploading={setProfileUploading}
+            setErrorNotification={setErrorNotification}
           />
           <UploadImage
             getGalleryData={getGalleryData}
             setUploadNotification={setUploadNotification}
             setImageUploading={setImageUploading}
+            setErrorNotification={setErrorNotification}
           />
           {imageUploading && <UploadLoader componentLoading="gallery" />}
           {profileUploading && <UploadLoader componentLoading="profile" />}
           {uploadNotification && (
-            <UploadNotification uploadNotification={uploadNotification} />
+            <UploadNotification
+              uploadNotification={uploadNotification}
+              setUploadNotification={setUploadNotification}
+            />
           )}
           {errorNotification && (
-            <ErrorNotification errorNotification={errorNotification} />
+            <ErrorNotification
+              errorNotification={errorNotification}
+              setErrorNotification={setErrorNotification}
+            />
           )}
         </div>
-        {/* Profile head */}
 
+        {/* Profile section */}
         <div className="profile-title-grid">
           <div>
             <h3>Profiles</h3>
           </div>
-          <div>{profileLoading && <Loader />}</div>
+          <div>{profileLoading && <MainLoader />}</div>
         </div>
+        {/* Profiles section */}
         <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
+        {/* Main grid views */}
+        {/* Gallery back button */}
         {view == "gallery" && (
           <motion.img
             src="images/folder-grid/folder-grid.png"
@@ -238,6 +240,7 @@ const Dashboard = ({ user, handleLogout }) => {
             whileHover={{ scale: 1.1 }}
           />
         )}
+        {/* Render Folders/Profiles */}
         {view == "folder" && (
           <FolderView
             galleryData={galleryData}
@@ -245,10 +248,10 @@ const Dashboard = ({ user, handleLogout }) => {
             galleryLoading={galleryLoading}
           />
         )}
+        {/* Render gallery */}
         {view == "gallery" && (
           <Gallery
             galleryData={galleryData}
-            // selectedFolder={selectedFolder}
             setSelectedImg={setSelectedImg}
             selectedFolderId={selectedFolderId}
             handleFolderView={handleFolderView}
@@ -256,18 +259,14 @@ const Dashboard = ({ user, handleLogout }) => {
             galleryLoading={galleryLoading}
           />
         )}
+        {/* IF image is selected, load image modal */}
         {selectedImg && (
           <ImageModal
             selectedImg={selectedImg}
             setSelectedImg={setSelectedImg}
           />
         )}
-
-        {/* {renderFolders()} */}
-        {/* <AddGallery getGalleryData={getGalleryData} /> */}
-        {/* { <Gallery galleryData={galleryData} />   */}
       </div>
-      {/* </Container> */}
     </AuthContext.Provider>
   );
 };

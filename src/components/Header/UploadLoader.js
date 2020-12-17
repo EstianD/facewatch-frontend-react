@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-// import { css } from "@emotion/core";
 
 function UploadLoader({ componentLoading }) {
-  // const [loading, setLoading] = useState(true);
   let Loader;
 
   if (componentLoading == "profile") {
@@ -30,10 +28,8 @@ function UploadLoader({ componentLoading }) {
     `;
   }
 
-  // console.log(color);
   return (
     <div>
-      {/* <div className="upload-loader" style={{ color }}></div> */}
       <Loader />
     </div>
   );

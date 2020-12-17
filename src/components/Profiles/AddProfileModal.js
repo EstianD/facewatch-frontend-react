@@ -1,15 +1,13 @@
 import React, { useState, Fragment } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
-import Grid from "@material-ui/core/Grid";
 import TextField from "@material-ui/core/TextField";
 import Button from "@material-ui/core/Button";
 import { motion } from "framer-motion";
 
 import ProfileMsg from "./ProfileMsg";
-import AddProfileProgressBar from "./AddProfileProgressBar";
 import ErrorMsg from "./ErrorMsg";
-import Loader from "../Header/Loader";
+import MainLoader from "../Header/MainLoader";
 
 import axios from "axios";
 
@@ -28,7 +26,7 @@ const useStyles = makeStyles((theme) => ({
   paper: {
     position: "absolute",
     width: 400,
-    backgroundColor: theme.palette.background.paper,
+    backgroundColor: "#fff",
     boxShadow: theme.shadows[5],
     padding: theme.spacing(2, 4, 3),
   },
@@ -49,6 +47,7 @@ const AddProfileModal = ({
   profileLoading,
   setUploadNotification,
   setProfileUploading,
+  setErrorNotification,
 }) => {
   const classes = useStyles();
   // getModalStyle is not a pure function, we roll the style only on the first render
@@ -56,10 +55,9 @@ const AddProfileModal = ({
   const [open, setOpen] = useState(false);
   const [file, setFile] = useState(false);
   const [profileuser, setprofileuser] = useState("");
-  const [message, setMessage] = useState("");
-  const [error, setError] = useState(null);
-  // const [uploadPerc, setUploadPerc] = useState(0);
-  // const [uploading, setUploading] = useState(false);
+  const [modalMessage, setModalMessage] = useState(null);
+  const [modalError, setModalError] = useState(null);
+
   const { REACT_APP_NODE_URL } = process.env;
 
   // Accepted file types
@@ -67,38 +65,36 @@ const AddProfileModal = ({
 
   const getProfileImage = (e) => {
     const file = e.target.files[0];
-    console.log("FILE: ", file);
-    console.log(file);
+
     if (file && types.includes(file.type)) {
-      // const file = files[0];
       setFile(file);
     } else {
       setFile(null);
-      setError("Please select image file of PNG or JPEG.");
+      setErrorNotification("Please select image file of PNG or JPEG.");
     }
   };
 
   const handleProfileNameChange = (e) => {
     setprofileuser(e.target.value);
-    // console.log(profileuser);
   };
 
   const handleProfileSubmit = async (e) => {
     e.preventDefault();
-    // const URL = process.env.REACT_APP_NODE_URL;
+
     const jwt = localStorage.getItem("jwt-auth");
-    // console.log(profileuser);
+
     // Create FormData
     const formData = new FormData();
     formData.append("image", file);
     formData.append("name", profileuser);
 
     // Check if file is selected with profile
-    if (file && profileuser && !error) {
+    // Send profile form to API
+    if (file && profileuser && !modalError) {
       try {
         setProfileUploading(true);
         setOpen(false);
-        // setProfileUploading(true);
+
         await axios
           .post(`${REACT_APP_NODE_URL}/file-upload/profile`, formData, {
             headers: {
@@ -114,17 +110,15 @@ const AddProfileModal = ({
               setprofileuser("");
               // re-render all profiles
               getProfileData();
-              // setUploadPerc(100);
-              setTimeout(() => {
-                // setUploadPerc(0);
-                setUploadNotification(null);
-              }, 3000);
+              // Remove notification after 3 seconds
+              // setTimeout(() => {
+              //   setUploadNotification(null);
+              // }, 3000);
             } else if (res.data.status === 401) {
               setprofileuser("");
-              setMessage(res.data.msg);
-              // setUploading(false);
+              setModalMessage(res.data.msg);
             } else {
-              setMessage(
+              setModalMessage(
                 "There was a error on our side, Please try again later."
               );
               setFile(null);
@@ -133,13 +127,13 @@ const AddProfileModal = ({
           });
       } catch (err) {
         if (err.response.status === 500) {
-          setMessage("There was a problem with the server");
+          setModalMessage("There was a problem with the server");
         } else {
-          setMessage(err.response.data.msg);
+          setModalMessage(err.response.data.msg);
         }
       }
     } else {
-      setMessage("Please enter a profile name with a image");
+      setModalMessage("Please enter a profile name with a image");
     }
   };
 
@@ -161,8 +155,8 @@ const AddProfileModal = ({
         Add a profile to fillter your images by.
       </p>
       <form className={classes.form} noValidate onSubmit={handleProfileSubmit}>
-        {message ? <ProfileMsg msg={message} /> : null}
-        {error ? <ErrorMsg error={error} /> : null}
+        {modalMessage ? <ProfileMsg msg={modalMessage} /> : null}
+        {modalError ? <ErrorMsg modalError={modalError} /> : null}
         <TextField
           variant="outlined"
           margin="normal"
@@ -206,18 +200,11 @@ const AddProfileModal = ({
           Add
         </Button>
       </form>
-      {/* {uploading && (
-        <>
-          <AddProfileProgressBar />
-        </>
-      )} */}
     </div>
   );
 
   return (
     <div>
-      {/* <div className="add-profile-grid"> */}
-      {/* <div className="add-profile-col"></div> */}
       <div className="add-col" onClick={handleOpen}>
         <motion.img
           className="add-profile-btn"
@@ -225,15 +212,6 @@ const AddProfileModal = ({
           whileHover={{ scale: 1.1 }}
         />
       </div>
-      {/* </div> */}
-      {/* <div className="profile-title-grid">
-        <div>
-          <h3>Profiles</h3>
-        </div>
-        <div>
-          <Loader />
-        </div>
-      </div> */}
 
       <Modal
         open={open}
@@ -243,7 +221,6 @@ const AddProfileModal = ({
       >
         {body}
       </Modal>
-      {/* </Grid> */}
     </div>
   );
 };

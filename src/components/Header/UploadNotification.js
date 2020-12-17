@@ -1,6 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const UploadNotification = ({ uploadNotification }) => {
+const UploadNotification = ({ uploadNotification, setUploadNotification }) => {
+  useEffect(() => {
+    setTimeout(() => {
+      setUploadNotification(null);
+    }, 4000);
+  }, uploadNotification);
   return (
     <div>
       <div className="add-col">

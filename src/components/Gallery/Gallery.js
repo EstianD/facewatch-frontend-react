@@ -1,39 +1,36 @@
 import React, { useEffect, useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
 import { motion } from "framer-motion";
 import { confirmAlert } from "react-confirm-alert"; // Import
 import "react-confirm-alert/src/react-confirm-alert.css"; // Import css
 
-import Paper from "@material-ui/core/Paper";
-import Grid from "@material-ui/core/Grid";
-import Divider from "@material-ui/core/Divider";
-import { v4 as uuidv4 } from "uuid";
-import GalleryImage from "./GalleryImage";
-import Loader from "./../Header/Loader";
+// Import components
+import MainLoader from "./../Header/MainLoader";
 
 const Gallery = ({
   galleryData,
   setSelectedImg,
   selectedFolderId,
-
   handleImageDelete,
   galleryLoading,
 }) => {
+  // State for the selected profile
   const [selectedFolder, setSelectedFolder] = useState(null);
+  // State for the gallery notification
   const [noImages, setNoImages] = useState("");
 
+  // Set the selected profile's images to render
+  // Update on gallery data update
   useEffect(() => {
     setSelectedFolder(galleryData[selectedFolderId]);
-    // console.log(galleryData[selectedFolderId].matchLength);
+    // Check if the current profile have any images
     if (galleryData[selectedFolderId].matchLength == 0) {
-      console.log("nope");
       setNoImages("No images to display!");
     }
   }, [galleryData]);
 
+  // Function for detecting image action
+  // Actions: Render modal for enlarged image or delete image
   const handleImageAction = (e, image) => {
-    console.log(e.target.className);
-    console.log(image);
     // Check the action clicked on image
     if (e.target.className == "gallery-img") {
       setSelectedImg(image);
@@ -59,7 +56,7 @@ const Gallery = ({
       ],
     });
   };
-  console.log("SELECTED: ", selectedFolder);
+
   return (
     <div>
       <div className="gallery-title-grid">
@@ -67,35 +64,10 @@ const Gallery = ({
           <h3>Gallery - {selectedFolder && selectedFolder.profileName}</h3>
         </div>
         <div>
-          <div>{galleryLoading && <Loader />}</div>
+          <div>{galleryLoading && <MainLoader />}</div>
         </div>
       </div>
-      {/* <div className="img-grid">
-        {galleryData &&
-          selectedFolder &&
-          selectedFolder.matches.map((image, idx) => (
-            <motion.div
-              layout
-              className="img-wrap"
-              key={idx}
-              onClick={(e) => handleImageAction(e, image)}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-            >
-              <div className="image-actions">
-                <div
-                  className="image-delete"
-                  // onClick={(e) => confirmDelete(profile["id"])}
-                >
-                  &#10060;
-                </div>
-              </div>
-              <img src={image} alt="some image" />
-            </motion.div>
-          ))}
-      </div> */}
-      {/* {noImages} */}
-      {/*  */}
+
       <ul className="gallery-ul">
         {galleryData &&
           selectedFolder &&
@@ -104,23 +76,23 @@ const Gallery = ({
               className="gallery-li"
               key={idx}
               onClick={(e) => handleImageAction(e, image)}
+              layout
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              whileHover={{ opacity: 0.9 }}
             >
               <div className="image-actions">
                 <div className="image-delete">&#10060;</div>
               </div>
 
-              <img src={image} alt="some image" className="gallery-img" />
+              {image && (
+                <img src={image} alt="some image" className="gallery-img" />
+              )}
             </motion.li>
           ))}
         <li></li>
       </ul>
-      {/* <div className="gallery-card">
-        {galleryData &&
-          selectedFolder &&
-          selectedFolder.matches.map((image, idx) => (
-            <img src={image} alt="some image" className="gallery-img" />
-          ))}
-      </div> */}
+
       {noImages}
     </div>
     //

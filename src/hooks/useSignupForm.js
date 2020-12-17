@@ -9,7 +9,7 @@ const useSignupForm = (callback, validateSignup) => {
   });
   // Signup errors state
   const [signupErrors, setSignupErrors] = useState({});
-  //   IsSubmitting state
+  // IsSubmitting state
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSignupChange = (event) => {
@@ -19,7 +19,6 @@ const useSignupForm = (callback, validateSignup) => {
       ...signupValues,
       [name]: value,
     });
-    // console.log(signupValues);
   };
 
   const handleSignupSubmit = (event) => {
@@ -27,7 +26,6 @@ const useSignupForm = (callback, validateSignup) => {
     setSignupErrors(validateSignup(signupValues));
 
     setIsSubmitting(true);
-    //  callback();
   };
 
   useEffect(() => {

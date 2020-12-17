@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import { css } from "@emotion/core";
 import PulseLoader from "react-spinners/PulseLoader";
 
-function Loader() {
+function MainLoader() {
+  // Loading state
   const [loading, setLoading] = useState(true);
   return (
     <div className="head-loader">
@@ -11,4 +12,4 @@ function Loader() {
   );
 }
 
-export default Loader;
+export default MainLoader;

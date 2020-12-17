@@ -11,10 +11,7 @@ import Dashboard from "./components/Dashboard";
 import isAuthenticated from "./services/checkAuth";
 
 const App = () => {
-  console.log("APP");
-
-  // APP STATES
-  // const [jwtState, setjwtState] = useState(null);
+  // User state
   const [user, setUser] = useState(isAuthenticated());
 
   const handleLogout = (e) => {
@@ -62,6 +59,9 @@ const App = () => {
   // Render
   return (
     <div>
+      {/* Check if user successfuly authenticated */}
+      {/* Success: Redirect to dashboard */}
+      {/* Failure: Show sign in form */}
       {user === null ? (
         signForm()
       ) : (
