@@ -3,6 +3,8 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import Grid from "@material-ui/core/Grid";
 
@@ -23,16 +25,24 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(1),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background: "#1697e0",
+    color: "#ffca28",
+    "&:hover": {
+      backgroundColor: "#ffca28",
+      color: "#1697e0",
+    },
+  },
+  signup: {
+    color: "#1697e0",
+    "&:hover": {
+      backgroundColor: "#fafafa",
+    },
   },
 }));
 
@@ -77,12 +87,12 @@ export default function SignIn({
   };
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="signin-container">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
+        <div className="home-title">
+          <FontAwesomeIcon icon={faUsers} size="4x" />
+        </div>
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
@@ -102,6 +112,9 @@ export default function SignIn({
             onChange={handleSigninChange}
             autoComplete="email"
             autoFocus
+            InputLabelProps={{
+              style: { color: "#1697e0" },
+            }}
           />
           <TextField
             variant="outlined"
@@ -114,13 +127,15 @@ export default function SignIn({
             id="password"
             onChange={handleSigninChange}
             autoComplete="current-password"
+            InputLabelProps={{
+              style: { color: "#1697e0" },
+            }}
           />
 
           <Button
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             className={classes.submit}
           >
             Sign In
@@ -131,7 +146,7 @@ export default function SignIn({
               <Button
                 id="signin"
                 onClick={(e) => handleToggleSign("signup")}
-                color="primary"
+                className={classes.signup}
               >
                 Sign Up
               </Button>

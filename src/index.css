@@ -36,10 +36,14 @@ code {
   background-color: #ffca28;
 }
 
-.app-title {
+.app-logo {
   color: #ffca28;
   /* width: 200%;
   height: 200%; */
+}
+
+.home-title {
+  color: #ffca28;
 }
 
 .logout-btn {
@@ -87,6 +91,13 @@ code {
 .dashboard-container {
   margin: 0 auto;
   padding: 0 10% 10% 10%;
+}
+
+/* Authentication sections */
+.signin-container {
+  border: 2px solid #1697e0;
+  margin-top: 10%;
+  box-shadow: 2px 3px 5px #1697e0;
 }
 
 /* section grids */

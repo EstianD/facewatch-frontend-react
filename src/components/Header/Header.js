@@ -19,7 +19,7 @@ const Header = ({ handleLogout }) => {
           {user.username.charAt(0).toUpperCase() + user.username.slice(1)}
         </h3>
       </div>
-      <div className="app-title">
+      <div className="app-logo">
         <FontAwesomeIcon icon={faUsers} size="2x" />
       </div>
       <div className="logout-div">
