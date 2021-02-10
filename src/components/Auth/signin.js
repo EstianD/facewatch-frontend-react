@@ -70,19 +70,41 @@ export default function SignIn({
     });
   };
 
+  // Validate email
+  function ValidateEmail(mail) {
+    if (
+      /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+        mail
+      )
+    ) {
+      return true;
+    }
+    return false;
+  }
+
   // On Signin attempt
   const handleSigninSubmit = async (event) => {
     event.preventDefault();
-    const signingIn = await signin(signinValues);
-
-    if (signingIn.status) {
-      localStorage.setItem("jwt-auth", signingIn.jwt);
-      setUser(isAuthenticated());
-      setSigninError(null);
-      setsignupStatus({ status: null });
+    console.log(signinValues);
+    // If email is empty
+    if (signinValues.signinEmail == "" || signinValues.signinPassword == "") {
+      setSigninError("Please enter a email and a password");
+      // If email is not an email
+    } else if (!ValidateEmail(signinValues.signinEmail)) {
+      setSigninError("Please enter a valid email");
     } else {
-      setSigninError(signingIn.error);
-      setUser(null);
+      // If client side validation passed
+      const signingIn = await signin(signinValues);
+
+      if (signingIn.status) {
+        localStorage.setItem("jwt-auth", signingIn.jwt);
+        setUser(isAuthenticated());
+        setSigninError(null);
+        setsignupStatus({ status: null });
+      } else {
+        setSigninError(signingIn.error);
+        setUser(null);
+      }
     }
   };
 
@@ -104,7 +126,6 @@ export default function SignIn({
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             id="email"
             label="Email Address"
@@ -119,7 +140,6 @@ export default function SignIn({
           <TextField
             variant="outlined"
             margin="normal"
-            required
             fullWidth
             name="signinPassword"
             label="Password"
