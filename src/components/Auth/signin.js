@@ -32,10 +32,10 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
     background: "#1697e0",
-    color: "#ffca28",
+    color: "#fff",
     "&:hover": {
       backgroundColor: "#ffca28",
-      color: "#1697e0",
+      color: "#fff",
     },
   },
   signup: {
@@ -43,6 +43,9 @@ const useStyles = makeStyles((theme) => ({
     "&:hover": {
       backgroundColor: "#fafafa",
     },
+  },
+  signinHeading: {
+    color: "#1697e0",
   },
 }));
 
@@ -85,7 +88,6 @@ export default function SignIn({
   // On Signin attempt
   const handleSigninSubmit = async (event) => {
     event.preventDefault();
-    console.log(signinValues);
     // If email is empty
     if (signinValues.signinEmail == "" || signinValues.signinPassword == "") {
       setSigninError("Please enter a email and a password");
@@ -109,15 +111,20 @@ export default function SignIn({
   };
 
   return (
-    <Container component="main" maxWidth="xs" className="signin-container">
+    <Container component="main" maxWidth="xs" className="auth-container">
       <CssBaseline />
       <div className={classes.paper}>
         <div className="home-title">
           <FontAwesomeIcon icon={faUsers} size="4x" />
         </div>
-        <Typography component="h1" variant="h5">
+        <Typography
+          component="h1"
+          variant="h5"
+          className={classes.signinHeading}
+        >
           Sign in
         </Typography>
+
         <form className={classes.form} onSubmit={handleSigninSubmit} noValidate>
           {signupStatus.status && (
             <Alert severity="success">{signupStatus.status}</Alert>

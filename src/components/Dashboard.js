@@ -31,6 +31,8 @@ const Dashboard = ({ user, handleLogout }) => {
 
   const { REACT_APP_NODE_URL } = process.env;
   const [profiles, setProfiles] = useState([]);
+  const [profileStatus, setProfileStatus] = useState("");
+  const [galleryStatus, setGalleryStatus] = useState("");
   const [galleryData, setGalleryData] = useState([]);
   const [profileLoading, setProfileLoading] = useState(false);
   const [galleryLoading, setGalleryLoading] = useState(false);
@@ -64,8 +66,15 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .then((res) => {
         // Set profile state
-        setProfiles(res.data["profiles"]);
-        setProfileLoading(false);
+        console.log(res);
+        if (res.data.profiles.length === 0) {
+          console.log("00000");
+          setProfileLoading(false);
+          setProfileStatus("Please add a profile to start using the App");
+        } else {
+          setProfiles(res.data["profiles"]);
+          setProfileLoading(false);
+        }
       })
       .catch((error) => {
         if (error.response.status == 400) {
@@ -88,11 +97,19 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .then((res) => {
         // Set state for the gallery
-        setGalleryData(res.data);
-        setGalleryLoading(false);
+
+        console.log("asdasd", res.data);
+        if (res.data.length) {
+          setGalleryData(res.data);
+          setGalleryLoading(false);
+        } else {
+          setGalleryLoading(false);
+          setGalleryStatus("You have not uploaded any images yet.");
+        }
       })
       .catch((error) => {
         // Redirect to login form if authentication expired
+        console.log(error);
         if (error.response.status == 400) {
           localStorage.removeItem("jwt-auth");
           handleLogout();
@@ -229,7 +246,11 @@ const Dashboard = ({ user, handleLogout }) => {
           <div>{profileLoading && <MainLoader />}</div>
         </div>
         {/* Profiles section */}
-        <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
+        {profileStatus}
+        {profiles && (
+          <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
+        )}
+
         {/* Main grid views */}
         {/* Gallery back button */}
         {view == "gallery" && (
@@ -241,6 +262,7 @@ const Dashboard = ({ user, handleLogout }) => {
           />
         )}
         {/* Render Folders/Profiles */}
+
         {view == "folder" && (
           <FolderView
             galleryData={galleryData}
@@ -248,6 +270,7 @@ const Dashboard = ({ user, handleLogout }) => {
             galleryLoading={galleryLoading}
           />
         )}
+        {galleryStatus}
         {/* Render gallery */}
         {view == "gallery" && (
           <Gallery

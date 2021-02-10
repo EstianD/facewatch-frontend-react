@@ -94,7 +94,7 @@ code {
 }
 
 /* Authentication sections */
-.signin-container {
+.auth-container {
   border: 2px solid #1697e0;
   margin-top: 10%;
   box-shadow: 2px 3px 5px #1697e0;

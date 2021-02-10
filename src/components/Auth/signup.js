@@ -10,6 +10,8 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import Alert from "@material-ui/lab/Alert";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import useSignupForm from "../../hooks/useSignupForm";
 import validateSignup from "../../services/validateSignup";
@@ -22,16 +24,30 @@ const useStyles = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
   },
-  avatar: {
-    margin: theme.spacing(1),
-    backgroundColor: theme.palette.secondary.main,
-  },
   form: {
     width: "100%", // Fix IE 11 issue.
     marginTop: theme.spacing(3),
   },
   submit: {
     margin: theme.spacing(3, 0, 2),
+    background: "#1697e0",
+    color: "#fff",
+    "&:hover": {
+      backgroundColor: "#ffca28",
+      color: "#fff",
+    },
+  },
+  signin: {
+    color: "#1697e0",
+    "&:hover": {
+      backgroundColor: "#fafafa",
+    },
+  },
+  signupHeading: {
+    color: "#1697e0",
+  },
+  signupError: {
+    marginBottom: "5%",
   },
 }));
 
@@ -40,10 +56,6 @@ export default function SignUp({
   setsignupStatus,
   signupStatus,
 }) {
-  // Deconstruct values from useForm
-
-  // const [signupStatus, setSignupStatus] = useState(null);
-
   const submit = async () => {
     // Submitting
     let registering = await signup(signupValues);
@@ -70,27 +82,45 @@ export default function SignUp({
   const classes = useStyles();
 
   return (
-    <Container component="main" maxWidth="xs">
+    <Container component="main" maxWidth="xs" className="auth-container">
       <CssBaseline />
       <div className={classes.paper}>
-        <Avatar className={classes.avatar}>
-          <LockOutlinedIcon />
-        </Avatar>
-        <Typography component="h1" variant="h5">
+        <div className="home-title">
+          <FontAwesomeIcon icon={faUsers} size="4x" />
+        </div>
+        <Typography
+          component="h1"
+          variant="h5"
+          className={classes.signupHeading}
+        >
           Sign up
         </Typography>
         <form className={classes.form} noValidate onSubmit={handleSignupSubmit}>
           {signupStatus.status && (
             <Alert severity="error">{signupStatus.status}</Alert>
           )}
+          {/* Username error status */}
           {signupErrors.signupUsername && (
-            <Alert severity="error">{signupErrors.signupUsername}</Alert>
+            <Alert severity="error" className={classes.signupError}>
+              {signupErrors.signupUsername}
+            </Alert>
+          )}
+          {/* Email error status */}
+          {signupErrors.signupEmail && (
+            <Alert severity="error" className={classes.signupError}>
+              {signupErrors.signupEmail}
+            </Alert>
+          )}
+          {/* Password error status */}
+          {signupErrors.signupPassword && (
+            <Alert severity="error" className={classes.signupError}>
+              {signupErrors.signupPassword}
+            </Alert>
           )}
 
           <Grid container spacing={2}>
             <Grid item xs={12}>
               <TextField
-                autoComplete="fname"
                 name="signupUsername"
                 variant="outlined"
                 required
@@ -100,11 +130,12 @@ export default function SignUp({
                 autoFocus
                 value={signupValues.signupUsername}
                 onChange={handleSignupChange}
+                InputLabelProps={{
+                  style: { color: "#1697e0" },
+                }}
               />
             </Grid>
-            {signupErrors.signupEmail && (
-              <Alert severity="error">{signupErrors.signupEmail}</Alert>
-            )}
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -116,11 +147,12 @@ export default function SignUp({
                 value={signupValues.signupEmail}
                 autoComplete="email"
                 onChange={handleSignupChange}
+                InputLabelProps={{
+                  style: { color: "#1697e0" },
+                }}
               />
             </Grid>
-            {signupErrors.signupPassword && (
-              <Alert severity="error">{signupErrors.signupPassword}</Alert>
-            )}
+
             <Grid item xs={12}>
               <TextField
                 variant="outlined"
@@ -133,6 +165,9 @@ export default function SignUp({
                 autoComplete="current-password"
                 value={signupValues.signupPassword}
                 onChange={handleSignupChange}
+                InputLabelProps={{
+                  style: { color: "#1697e0" },
+                }}
               />
             </Grid>
           </Grid>
@@ -140,7 +175,6 @@ export default function SignUp({
             type="submit"
             fullWidth
             variant="contained"
-            color="primary"
             className={classes.submit}
           >
             Sign Up
@@ -149,7 +183,7 @@ export default function SignUp({
             <Grid item>
               <Button
                 onClick={(e) => handleToggleSign("signin")}
-                color="primary"
+                className={classes.signin}
               >
                 Sign In
               </Button>
