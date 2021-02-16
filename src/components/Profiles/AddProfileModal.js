@@ -1,4 +1,4 @@
-import React, { useState, Fragment } from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import Modal from "@material-ui/core/Modal";
 import TextField from "@material-ui/core/TextField";
@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 import ProfileMsg from "./ProfileMsg";
 import ErrorMsg from "./ErrorMsg";
-import MainLoader from "../Header/MainLoader";
+// import MainLoader from "../Header/MainLoader";
 
 import axios from "axios";
 
@@ -56,7 +56,7 @@ const AddProfileModal = ({
   const [file, setFile] = useState(false);
   const [profileuser, setprofileuser] = useState("");
   const [modalMessage, setModalMessage] = useState(null);
-  const [modalError, setModalError] = useState(null);
+  // const [modalError, setModalError] = useState(null);
 
   const { REACT_APP_NODE_URL } = process.env;
 
@@ -90,7 +90,7 @@ const AddProfileModal = ({
 
     // Check if file is selected with profile
     // Send profile form to API
-    if (file && profileuser && !modalError) {
+    if (file && profileuser) {
       try {
         setProfileUploading(true);
         setOpen(false);
@@ -156,7 +156,7 @@ const AddProfileModal = ({
       </p>
       <form className={classes.form} noValidate onSubmit={handleProfileSubmit}>
         {modalMessage ? <ProfileMsg msg={modalMessage} /> : null}
-        {modalError ? <ErrorMsg modalError={modalError} /> : null}
+        {/* {modalError ? <ErrorMsg modalError={modalError} /> : null} */}
         <TextField
           variant="outlined"
           margin="normal"

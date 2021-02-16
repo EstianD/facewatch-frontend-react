@@ -1,5 +1,6 @@
 export default function validateSignup(values) {
   let errors = {};
+  const mailformat = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
 
   //   Validate username
   if (!values.signupUsername) {
@@ -9,9 +10,8 @@ export default function validateSignup(values) {
   // Validate email
   if (!values.signupEmail) {
     errors.signupEmail = "Please enter a email address";
-  } else if (
-    !/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(values.signupEmail)
-  ) {
+  } else if (!values.signupEmail.match(mailformat)) {
+    console.log("error");
     errors.signupEmail = "Email address is invalid";
   }
 
@@ -19,7 +19,7 @@ export default function validateSignup(values) {
   if (!values.signupPassword) {
     errors.signupPassword = "Please enter a password";
   } else if (values.signupPassword.length < 6) {
-    errors.signupPassword = "Password needs to be atleast 10 characters";
+    errors.signupPassword = "Password needs to be atleast 6 characters";
   }
 
   return errors;

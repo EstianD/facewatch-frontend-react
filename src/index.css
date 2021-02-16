@@ -100,6 +100,17 @@ code {
   box-shadow: 2px 3px 5px #1697e0;
 }
 
+.auth-loader {
+  border: 2px solid #f3f3f3;
+  border-top: 2px solid #1697e0;
+  border-radius: 50%;
+  width: 15px;
+  height: 15px;
+  animation: spin 1.5s linear infinite;
+  margin: 5px;
+  /* margin-left: 25%; */
+}
+
 /* section grids */
 .img-grid {
   margin: 20px auto;
@@ -386,6 +397,9 @@ li:last-child {
   margin-top: 25%;
 }
 
+.loading-text {
+}
+
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -419,6 +433,15 @@ li:last-child {
   background-color: #f44336; /* Red */
   color: white;
   margin-top: 10px;
+}
+
+.dashboard-status {
+  background-color: #1697e0;
+  padding: 15px;
+  width: 300px;
+  max-width: 75%;
+  color: #fff;
+  border-radius: 4px;
 }
 
 /* Modal styles */

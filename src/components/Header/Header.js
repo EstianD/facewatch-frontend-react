@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import AuthContext from "../../hooks/AuthContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUsers } from "@fortawesome/free-solid-svg-icons";
@@ -9,8 +9,8 @@ import Logout from "./logout";
 const Header = ({ handleLogout }) => {
   const user = useContext(AuthContext);
 
-  const [anchorEl, setAnchorEl] = useState(null);
-  const open = Boolean(anchorEl);
+  // const [anchorEl, setAnchorEl] = useState(null);
+  // const open = Boolean(anchorEl);
 
   return (
     <div className="top-nav">

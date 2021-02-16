@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 
 import { motion } from "framer-motion";
@@ -9,8 +9,8 @@ function UploadImage({
   setImageUploading,
   setErrorNotification,
 }) {
-  const [files, setFiles] = useState(null);
-  const [uploaded, setUploaded] = useState(null);
+  // const [files, setFiles] = useState(null);
+  // const [uploaded, setUploaded] = useState(null);
 
   const { REACT_APP_NODE_URL } = process.env;
   //   Define file types accepted
@@ -28,14 +28,14 @@ function UploadImage({
         if (types.includes(inputFiles[i].type)) {
           formData.append(`image`, inputFiles[i]);
         } else {
-          setFiles(null);
+          // setFiles(null);
           setErrorNotification(
             "One or more images is not the required type. Please select image type PNG or JPEG."
           );
           return;
         }
       }
-      setFiles(formData.getAll("image"));
+      // setFiles(formData.getAll("image"));
 
       // Upload File
       try {
@@ -86,7 +86,7 @@ function UploadImage({
             />
           </label>
         </div>
-        <div className="upload-message">{files && <div>{uploaded}</div>}</div>
+        {/* <div className="upload-message">{files && <div>{uploaded}</div>}</div> */}
       </form>
     </div>
   );

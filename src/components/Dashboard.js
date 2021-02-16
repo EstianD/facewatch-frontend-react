@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { motion } from "framer-motion";
 
 // Material ui
 import CssBaseline from "@material-ui/core/CssBaseline";
-import { Container, Grid } from "@material-ui/core";
+// import { Container, Grid } from "@material-ui/core";
 
 import AuthContext from "../hooks/AuthContext";
 
@@ -23,8 +23,9 @@ import FolderView from "./Gallery/FolderView";
 import ProfileList from "./Profiles/ProfileList";
 import UploadNotification from "./Header/UploadNotification";
 import ErrorNotification from "./Header/ErrorNotification";
-import MainLoader from "./Header/MainLoader";
+// import MainLoader from "./Header/MainLoader";
 import UploadLoader from "./Header/UploadLoader";
+import DashboardStatus from "./Notifications/DashboardStatus";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -68,16 +69,17 @@ const Dashboard = ({ user, handleLogout }) => {
         // Set profile state
         console.log(res);
         if (res.data.profiles.length === 0) {
-          console.log("00000");
           setProfileLoading(false);
-          setProfileStatus("Please add a profile to start using the App");
+          setProfileStatus("You have no profiles uploaded!");
         } else {
           setProfiles(res.data["profiles"]);
           setProfileLoading(false);
+          setProfileStatus("");
         }
       })
       .catch((error) => {
-        if (error.response.status == 400) {
+        console.log(error);
+        if (error.response.status === 400) {
           localStorage.removeItem("jwt-auth");
           handleLogout();
         }
@@ -97,20 +99,22 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .then((res) => {
         // Set state for the gallery
-
-        console.log("asdasd", res.data);
-        if (res.data.length) {
+        console.log("DATA: ", res.data);
+        if (res.data.length > 0) {
           setGalleryData(res.data);
           setGalleryLoading(false);
+          setGalleryStatus("");
         } else {
+          setGalleryData(res.data);
           setGalleryLoading(false);
           setGalleryStatus("You have not uploaded any images yet.");
+          setView("folder");
         }
       })
       .catch((error) => {
         // Redirect to login form if authentication expired
         console.log(error);
-        if (error.response.status == 400) {
+        if (error.response.status === 400) {
           localStorage.removeItem("jwt-auth");
           handleLogout();
         }
@@ -126,6 +130,7 @@ const Dashboard = ({ user, handleLogout }) => {
   // Run everytime profile state changes
   useEffect(() => {
     getGalleryData();
+    console.log(Array.isArray(profiles));
   }, [profiles]);
 
   // Handle the deletion of a profile
@@ -154,6 +159,7 @@ const Dashboard = ({ user, handleLogout }) => {
         setProfiles(newProfilesArr);
         setUploadNotification("Profile successfully deleted!");
         setProfileLoading(false);
+        setProfileStatus("You have no profiles uploaded!");
         setTimeout(() => {
           setUploadNotification(null);
         }, 3000);
@@ -222,6 +228,7 @@ const Dashboard = ({ user, handleLogout }) => {
             setImageUploading={setImageUploading}
             setErrorNotification={setErrorNotification}
           />
+
           {imageUploading && <UploadLoader componentLoading="gallery" />}
           {profileUploading && <UploadLoader componentLoading="profile" />}
           {uploadNotification && (
@@ -243,17 +250,18 @@ const Dashboard = ({ user, handleLogout }) => {
           <div>
             <h3>Profiles</h3>
           </div>
-          <div>{profileLoading && <MainLoader />}</div>
+          {/* <div>{profileLoading && <MainLoader />}</div> */}
         </div>
         {/* Profiles section */}
-        {profileStatus}
+
+        {profileStatus && <DashboardStatus notificationText={profileStatus} />}
         {profiles && (
           <ProfileList profiles={profiles} onProfileDelete={onProfileDelete} />
         )}
 
         {/* Main grid views */}
         {/* Gallery back button */}
-        {view == "gallery" && (
+        {view === "gallery" && (
           <motion.img
             src="images/folder-grid/folder-grid.png"
             className="folder-grid-btn"
@@ -263,16 +271,16 @@ const Dashboard = ({ user, handleLogout }) => {
         )}
         {/* Render Folders/Profiles */}
 
-        {view == "folder" && (
+        {view === "folder" && (
           <FolderView
             galleryData={galleryData}
             handleFolderSelect={handleFolderSelect}
             galleryLoading={galleryLoading}
           />
         )}
-        {galleryStatus}
+        {galleryStatus && <DashboardStatus notificationText={galleryStatus} />}
         {/* Render gallery */}
-        {view == "gallery" && (
+        {view === "gallery" && (
           <Gallery
             galleryData={galleryData}
             setSelectedImg={setSelectedImg}

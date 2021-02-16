@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
+// import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
 
 import Grid from "@material-ui/core/Grid";
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+// import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -16,6 +16,7 @@ import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import useSignupForm from "../../hooks/useSignupForm";
 import validateSignup from "../../services/validateSignup";
 import signup from "../../services/signup";
+import AuthLoader from "./AuthLoader";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -56,19 +57,25 @@ export default function SignUp({
   setsignupStatus,
   signupStatus,
 }) {
+  const [signupLoader, setSignupLoader] = useState(null);
+
   const submit = async () => {
     // Submitting
+    setSignupLoader(true);
     let registering = await signup(signupValues);
 
     if (registering.status) {
       // if (signup(signupValues)) {
       setsignupStatus({ status: "User added successfully!", page: "signin" });
+      setSignupLoader(null);
     } else if (!registering.status) {
       setsignupStatus({ status: registering.error });
+      setSignupLoader(null);
     } else {
       setsignupStatus({
         status: "Something went wrong. Try again!",
       });
+      setSignupLoader(null);
     }
   };
 
@@ -177,7 +184,8 @@ export default function SignUp({
             variant="contained"
             className={classes.submit}
           >
-            Sign Up
+            {!signupLoader && "Sign Up"}
+            {signupLoader && <AuthLoader />}
           </Button>
           <Grid container justify="flex-end">
             <Grid item>

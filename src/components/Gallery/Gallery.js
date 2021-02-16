@@ -21,10 +21,16 @@ const Gallery = ({
   // Set the selected profile's images to render
   // Update on gallery data update
   useEffect(() => {
+    console.log("SELECTED FOLDER: ", selectedFolder);
+    console.log("GALLERY DATA:", galleryData);
     setSelectedFolder(galleryData[selectedFolderId]);
     // Check if the current profile have any images
-    if (galleryData[selectedFolderId].matchLength == 0) {
-      setNoImages("No images to display!");
+    if (galleryData.length !== 0) {
+      if (galleryData[selectedFolderId].matchLength === 0) {
+        setNoImages("No images to display!");
+      }
+    } else {
+      //
     }
   }, [galleryData]);
 
@@ -32,9 +38,9 @@ const Gallery = ({
   // Actions: Render modal for enlarged image or delete image
   const handleImageAction = (e, image) => {
     // Check the action clicked on image
-    if (e.target.className == "gallery-img") {
+    if (e.target.className === "gallery-img") {
       setSelectedImg(image);
-    } else if (e.target.className == "image-delete") {
+    } else if (e.target.className === "image-delete") {
       // Delete image modal
       confirmImageDelete(image);
     }
@@ -85,9 +91,7 @@ const Gallery = ({
                 <div className="image-delete">&#10060;</div>
               </div>
 
-              {image && (
-                <img src={image} alt="some image" className="gallery-img" />
-              )}
+              {image && <img src={image} className="gallery-img" />}
             </motion.li>
           ))}
         <li></li>

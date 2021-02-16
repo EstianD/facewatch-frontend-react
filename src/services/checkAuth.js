@@ -1,4 +1,3 @@
-import react, { useState } from "react";
 import jwtDecode from "jwt-decode";
 
 export default function isAuthenticated() {

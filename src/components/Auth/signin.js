@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import Avatar from "@material-ui/core/Avatar";
+// import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -8,7 +8,7 @@ import { faUsers } from "@fortawesome/free-solid-svg-icons";
 
 import Grid from "@material-ui/core/Grid";
 
-import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
+// import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
@@ -17,6 +17,7 @@ import Alert from "@material-ui/lab/Alert";
 // Import Signin service
 import signin from "../../services/signin";
 import isAuthenticated from "../../services/checkAuth";
+import AuthLoader from "./AuthLoader";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -63,6 +64,7 @@ export default function SignIn({
     signinPassword: "",
   });
   const [signinError, setSigninError] = useState(null);
+  const [loginLoader, setLoginLoader] = useState(null);
 
   const handleSigninChange = (event) => {
     const { name, value } = event.target;
@@ -85,17 +87,20 @@ export default function SignIn({
     return false;
   }
 
+  // console.log(loginLoader);
+
   // On Signin attempt
   const handleSigninSubmit = async (event) => {
     event.preventDefault();
     // If email is empty
-    if (signinValues.signinEmail == "" || signinValues.signinPassword == "") {
+    if (signinValues.signinEmail === "" || signinValues.signinPassword === "") {
       setSigninError("Please enter a email and a password");
       // If email is not an email
     } else if (!ValidateEmail(signinValues.signinEmail)) {
       setSigninError("Please enter a valid email");
     } else {
       // If client side validation passed
+      setLoginLoader(true);
       const signingIn = await signin(signinValues);
 
       if (signingIn.status) {
@@ -103,9 +108,11 @@ export default function SignIn({
         setUser(isAuthenticated());
         setSigninError(null);
         setsignupStatus({ status: null });
+        setLoginLoader(false);
       } else {
         setSigninError(signingIn.error);
         setUser(null);
+        setLoginLoader(false);
       }
     }
   };
@@ -165,8 +172,10 @@ export default function SignIn({
             variant="contained"
             className={classes.submit}
           >
-            Sign In
+            {!loginLoader && "Sign In"}
+            {loginLoader && <AuthLoader />}
           </Button>
+
           <Grid container>
             <Grid item xs></Grid>
             <Grid item>

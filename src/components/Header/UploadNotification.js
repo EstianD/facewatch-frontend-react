@@ -5,7 +5,7 @@ const UploadNotification = ({ uploadNotification, setUploadNotification }) => {
     setTimeout(() => {
       setUploadNotification(null);
     }, 4000);
-  }, uploadNotification);
+  }, [uploadNotification]);
   return (
     <div>
       <div className="add-col">
