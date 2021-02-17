@@ -21,16 +21,12 @@ const Gallery = ({
   // Set the selected profile's images to render
   // Update on gallery data update
   useEffect(() => {
-    console.log("SELECTED FOLDER: ", selectedFolder);
-    console.log("GALLERY DATA:", galleryData);
     setSelectedFolder(galleryData[selectedFolderId]);
     // Check if the current profile have any images
     if (galleryData.length !== 0) {
       if (galleryData[selectedFolderId].matchLength === 0) {
         setNoImages("No images to display!");
       }
-    } else {
-      //
     }
   }, [galleryData]);
 

@@ -397,7 +397,47 @@ li:last-child {
   margin-top: 25%;
 }
 
+/* Spinning loader styles */
+.centered {
+  text-align: center;
+}
+
 .loading-text {
+  width: 90px;
+  position: absolute;
+  top: calc(50% - 20px);
+  left: calc(50% - 55px);
+  text-align: center;
+}
+
+/* .spinner {
+  padding: 50px;
+  text-align: center;
+} */
+
+.spinner:before {
+  content: "";
+  height: 90px;
+  width: 90px;
+  margin: -15px auto auto -15px;
+  position: absolute;
+  top: calc(50% - 45px);
+  left: calc(50% - 45px);
+  border-width: 8px;
+  border-style: solid;
+  border-color: #2180c0 #ccc #ccc;
+  border-radius: 100%;
+  animation: rotation 0.7s infinite linear;
+  /* animation-fill-mode: inherit; */
+}
+
+@keyframes rotation {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(359deg);
+  }
 }
 
 @keyframes spin {

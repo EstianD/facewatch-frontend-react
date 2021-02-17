@@ -9,9 +9,6 @@ function UploadImage({
   setImageUploading,
   setErrorNotification,
 }) {
-  // const [files, setFiles] = useState(null);
-  // const [uploaded, setUploaded] = useState(null);
-
   const { REACT_APP_NODE_URL } = process.env;
   //   Define file types accepted
   const types = ["image/png", "image/jpeg"];
@@ -35,7 +32,6 @@ function UploadImage({
           return;
         }
       }
-      // setFiles(formData.getAll("image"));
 
       // Upload File
       try {
@@ -86,7 +82,6 @@ function UploadImage({
             />
           </label>
         </div>
-        {/* <div className="upload-message">{files && <div>{uploaded}</div>}</div> */}
       </form>
     </div>
   );

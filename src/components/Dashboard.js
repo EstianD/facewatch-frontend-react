@@ -4,28 +4,22 @@ import { motion } from "framer-motion";
 
 // Material ui
 import CssBaseline from "@material-ui/core/CssBaseline";
-// import { Container, Grid } from "@material-ui/core";
 
 import AuthContext from "../hooks/AuthContext";
 
 // Components
 import Header from "./Header/Header";
-// import Profiles from "./Profiles/Profiles";
 import AddProfileModal from "../components/Profiles/AddProfileModal";
-// import Main from "./Gallery/Main";
 import UploadImage from "./Gallery/UploadImage";
-// import Folder from "./Gallery/Folder";
-// import GalleryImage from "../components/Gallery/GalleryImage";
-// import AddGallery from "./Gallery/AddGallery";
 import Gallery from "./Gallery/Gallery";
 import ImageModal from "./Gallery/ImageModal";
 import FolderView from "./Gallery/FolderView";
 import ProfileList from "./Profiles/ProfileList";
 import UploadNotification from "./Header/UploadNotification";
 import ErrorNotification from "./Header/ErrorNotification";
-// import MainLoader from "./Header/MainLoader";
 import UploadLoader from "./Header/UploadLoader";
 import DashboardStatus from "./Notifications/DashboardStatus";
+import UploadSpinner from "./Header/UploadSpinner";
 
 const Dashboard = ({ user, handleLogout }) => {
   const jwt = localStorage.getItem("jwt-auth");
@@ -67,7 +61,6 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .then((res) => {
         // Set profile state
-        console.log(res);
         if (res.data.profiles.length === 0) {
           setProfileLoading(false);
           setProfileStatus("You have no profiles uploaded!");
@@ -78,7 +71,6 @@ const Dashboard = ({ user, handleLogout }) => {
         }
       })
       .catch((error) => {
-        console.log(error);
         if (error.response.status === 400) {
           localStorage.removeItem("jwt-auth");
           handleLogout();
@@ -99,7 +91,6 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .then((res) => {
         // Set state for the gallery
-        console.log("DATA: ", res.data);
         if (res.data.length > 0) {
           setGalleryData(res.data);
           setGalleryLoading(false);
@@ -113,7 +104,6 @@ const Dashboard = ({ user, handleLogout }) => {
       })
       .catch((error) => {
         // Redirect to login form if authentication expired
-        console.log(error);
         if (error.response.status === 400) {
           localStorage.removeItem("jwt-auth");
           handleLogout();
@@ -130,7 +120,6 @@ const Dashboard = ({ user, handleLogout }) => {
   // Run everytime profile state changes
   useEffect(() => {
     getGalleryData();
-    console.log(Array.isArray(profiles));
   }, [profiles]);
 
   // Handle the deletion of a profile
@@ -244,13 +233,12 @@ const Dashboard = ({ user, handleLogout }) => {
             />
           )}
         </div>
-
+        {/* <UploadSpinner /> */}
         {/* Profile section */}
         <div className="profile-title-grid">
           <div>
             <h3>Profiles</h3>
           </div>
-          {/* <div>{profileLoading && <MainLoader />}</div> */}
         </div>
         {/* Profiles section */}
 

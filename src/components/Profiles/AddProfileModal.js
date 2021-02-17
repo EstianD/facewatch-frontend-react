@@ -56,7 +56,6 @@ const AddProfileModal = ({
   const [file, setFile] = useState(false);
   const [profileuser, setprofileuser] = useState("");
   const [modalMessage, setModalMessage] = useState(null);
-  // const [modalError, setModalError] = useState(null);
 
   const { REACT_APP_NODE_URL } = process.env;
 

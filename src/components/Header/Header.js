@@ -9,9 +9,6 @@ import Logout from "./logout";
 const Header = ({ handleLogout }) => {
   const user = useContext(AuthContext);
 
-  // const [anchorEl, setAnchorEl] = useState(null);
-  // const open = Boolean(anchorEl);
-
   return (
     <div className="top-nav">
       <div className="user-title">
