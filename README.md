@@ -22,10 +22,10 @@ API Gateway
 
 ## Working Demo details
 
-### [Face-Watch](http://facewatch.webdev-env.com)
+### [Face-Watch](http://facewatch.webdev-pg.com)
 
-username: lotr@lotr.com<br/>
-pass: lotr4321
+username: friends@test.com<br/>
+pass: friends4321
 
 ### (Alternatively you can create you own account.)
 
