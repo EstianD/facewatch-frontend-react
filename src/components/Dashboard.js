@@ -148,7 +148,11 @@ const Dashboard = ({ user, handleLogout }) => {
         setProfiles(newProfilesArr);
         setUploadNotification("Profile successfully deleted!");
         setProfileLoading(false);
-        setProfileStatus("You have no profiles uploaded!");
+        // Check if profiles is empty
+        if (newProfilesArr.length === 0) {
+          setProfileStatus("You have no profiles uploaded!");
+        }
+
         setTimeout(() => {
           setUploadNotification(null);
         }, 3000);

@@ -48,11 +48,21 @@ function UploadImage({
             if (res.data.status === 200) {
               setImageUploading(false);
               // Set state for gallery update
-              setUploadNotification("Files uploaded successfully");
+              // setUploadNotification("Files uploaded successfully");
+              setUploadNotification(res.data.msg);
               // Update state after 3 seconds to give LAMBDA functions to execute
               setTimeout(() => {
                 getGalleryData();
                 setUploadNotification(null);
+              }, 3000);
+            } else if (res.data.status === 400) {
+              //Check for failed upload
+              setImageUploading(false);
+              // Set state for gallery update
+              setErrorNotification(res.data.msg);
+              // Remove error notification
+              setTimeout(() => {
+                setErrorNotification(null);
               }, 3000);
             }
           });
