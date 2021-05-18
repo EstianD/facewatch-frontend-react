@@ -1,8 +1,8 @@
 ## Project Description
 
-The App is a dashboard written in React to organise your photos with facial AWS facial Rekognition. After authorising, you can upload a album of your favorite photos and then add profiles of people in those images. The app will then organise your photos according to those profiles you created.
+The App is written in React to organise your photos with AWS facial Rekognition. After authorising, you can upload a album of your favorite photos(of people) and then add profiles for faces. The app will then find mathches of all of your recognised profiles and filter them accordingly.<br/>
 There is still alot that can be done with this app but at its current state it accomplishes what I was trying to do.<br/>
-This is only the frontend repo. The backend API and AWS LAMBDA scripts can found at [here](https://github.com/EstianD/face-watch-backend)<br/><br/>
+This is the frontend repo. The backend API and AWS LAMBDA scripts can found at [here](https://github.com/EstianD/face-watch-backend)<br/><br/>
 This project makes use of:<br/><br/>
 **Frontend**<br/>
 
