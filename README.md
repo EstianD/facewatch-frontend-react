@@ -29,15 +29,16 @@ pass: friends4321
 
 ### (Alternatively you can create you own account.)
 
-## Scripts
+## Installation
+### Clone repo
+### npm i
+Installs dependencies
 
+## Scripts
 In the project directory:
 
 ### `npm start`
 
-Runs the app in the development mode.<br />
+Runs the app in the browser of your choice.<br />
 Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-### `npm run build`
-
-Builds the project.
