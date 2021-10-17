@@ -22,10 +22,10 @@ API Gateway
 
 ## Working Demo details
 
-### [Face-Watch](http://facewatch.webdev-pg.com)
+### [Face-Watch](https://face-watch.herokuapp.com/)
 
-username: friends@test.com<br/>
-pass: friends4321
+username: lotr@test.com<br/>
+pass: test123
 
 ### (Alternatively you can create you own account.)
 
